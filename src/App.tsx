@@ -1,7 +1,7 @@
-import Page from "@/app/dashboard/page"
+import DashboardPage from "@/app/dashboard/page"
 
 export function App() {
-  return <Page />
+  return <DashboardPage />
 }
 
 export default App
