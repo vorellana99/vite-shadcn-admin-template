@@ -37,7 +37,6 @@ export function NavMain({
       for (const sub of item.items ?? []) {
         if (sub.isActive) return `${item.title}-${sub.title}`
       }
-      if (item.isActive) return item.title
     }
     return null
   }
@@ -56,11 +55,7 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton
-                  tooltip={item.title}
-                  isActive={selectedId === item.title}
-                  onClick={() => setSelectedId(item.title)}
-                >
+                <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
                   <span className="font-semibold">{item.title}</span>
                   <ChevronRight className="ml-auto transition-transform duration-500 group-data-[state=open]/collapsible:rotate-90" />
