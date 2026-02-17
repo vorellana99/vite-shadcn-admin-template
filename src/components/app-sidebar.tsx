@@ -58,6 +58,7 @@ const data = {
         {
           title: "History",
           url: "#",
+          isActive: true,
         },
         {
           title: "Starred",
