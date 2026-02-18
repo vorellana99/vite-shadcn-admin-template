@@ -15,6 +15,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
 
 export function NavMain({
@@ -41,6 +42,7 @@ export function NavMain({
     return null
   }
   const [selectedId, setSelectedId] = useState<string | null>(getInitialSelectedId)
+  const { isMobile, setOpenMobile } = useSidebar()
 
   return (
     <SidebarGroup>
@@ -74,6 +76,7 @@ export function NavMain({
                           onClick={(e) => {
                             setSelectedId(`${item.title}-${subItem.title}`)
                             if (subItem.url === "#") e.preventDefault()
+                            if (isMobile) setOpenMobile(false)
                           }}
                         >
                           <span>{subItem.title}</span>
