@@ -18,6 +18,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
+let persistedSelectedId: string | null = null
+
 export function NavMain({
   items,
 }: {
@@ -34,6 +36,7 @@ export function NavMain({
   }[]
 }) {
   const getInitialSelectedId = () => {
+    if (persistedSelectedId) return persistedSelectedId
     for (const item of items) {
       for (const sub of item.items ?? []) {
         if (sub.isActive) return `${item.title}-${sub.title}`
@@ -41,8 +44,13 @@ export function NavMain({
     }
     return null
   }
-  const [selectedId, setSelectedId] = useState<string | null>(getInitialSelectedId)
+  const [selectedId, _setSelectedId] = useState<string | null>(getInitialSelectedId)
   const { isMobile, setOpenMobile } = useSidebar()
+
+  const setSelectedId = (id: string) => {
+    _setSelectedId(id)
+    persistedSelectedId = id
+  }
 
   return (
     <SidebarGroup>
