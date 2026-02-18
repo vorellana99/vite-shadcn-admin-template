@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { ChevronRight, type LucideIcon } from "lucide-react"
 
 import {
@@ -18,8 +18,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-let persistedSelectedId: string | null = null
-
 export function NavMain({
   items,
 }: {
@@ -27,33 +25,22 @@ export function NavMain({
     title: string
     url: string
     icon?: LucideIcon
-    isActive?: boolean
     items?: {
       title: string
       url: string
-      isActive?: boolean
     }[]
   }[]
 }) {
-  const getInitialSelectedId = () => {
-    if (persistedSelectedId) return persistedSelectedId
-    for (const item of items) {
-      for (const sub of item.items ?? []) {
-        if (sub.isActive) return `${item.title}-${sub.title}`
-      }
-    }
-    return null
-  }
-  const [selectedId, _setSelectedId] = useState<string | null>(getInitialSelectedId)
+  const { pathname } = useLocation()
   const { isMobile, setOpenMobile } = useSidebar()
-
-  const setSelectedId = (id: string) => {
-    _setSelectedId(id)
-    persistedSelectedId = id
-  }
 
   const isDirectItem = (item: typeof items[number]) =>
     !item.items || item.items.length === 0
+
+  const handleClick = (e: React.MouseEvent, url: string) => {
+    if (url === "#") e.preventDefault()
+    if (isMobile) setOpenMobile(false)
+  }
 
   return (
     <SidebarGroup>
@@ -61,38 +48,32 @@ export function NavMain({
       <SidebarMenu>
         {items.map((item) => {
           if (isDirectItem(item)) {
+            const isActive = pathname === item.url
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton
                   asChild
                   tooltip={item.title}
-                  isActive={selectedId === item.title}
+                  isActive={isActive}
                   className="direct-menu-item"
                 >
-                  <a
-                    href={item.url}
-                    onClick={(e) => {
-                      setSelectedId(item.title)
-                      if (item.url === "#") e.preventDefault()
-                      if (isMobile) setOpenMobile(false)
-                    }}
-                  >
+                  <Link to={item.url} onClick={(e) => handleClick(e, item.url)}>
                     {item.icon && <item.icon />}
                     <span className="font-semibold">{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )
           }
 
           const hasActiveChild = item.items?.some(
-            (sub) => selectedId === `${item.title}-${sub.title}`
+            (sub) => pathname === sub.url
           )
           return (
             <Collapsible
               key={item.title}
               asChild
-              defaultOpen={item.isActive || hasActiveChild}
+              defaultOpen={hasActiveChild}
               className="group/collapsible"
             >
               <SidebarMenuItem>
@@ -109,18 +90,11 @@ export function NavMain({
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton
                           asChild
-                          isActive={selectedId === `${item.title}-${subItem.title}`}
+                          isActive={pathname === subItem.url}
                         >
-                          <a
-                            href={subItem.url}
-                            onClick={(e) => {
-                              setSelectedId(`${item.title}-${subItem.title}`)
-                              if (subItem.url === "#") e.preventDefault()
-                              if (isMobile) setOpenMobile(false)
-                            }}
-                          >
+                          <Link to={subItem.url} onClick={(e) => handleClick(e, subItem.url)}>
                             <span>{subItem.title}</span>
-                          </a>
+                          </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}

@@ -4,12 +4,8 @@ import {
   BookOpen,
   Bot,
   Command,
-  Frame,
   GalleryVerticalEnd,
   LayoutDashboard,
-  Map,
-  PieChart,
-  Settings2,
   SquareTerminal,
 } from "lucide-react"
 
@@ -23,7 +19,6 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
 const data = {
   user: {
     name: "shadcn",
@@ -50,29 +45,25 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/",
       icon: LayoutDashboard,
     },
     {
       title: "Tables",
       url: "#",
       icon: SquareTerminal,
-      isActive: true,
       items: [
         {
           title: "Basic Tables",
-          url: "#",
-          isActive: true,
+          url: "/tables/basic",
         },
         {
           title: "Advanced Tables",
           url: "#",
-          isActive: true,
         },
         {
           title: "Datatable",
           url: "#",
-          isActive: true,
         },
       ],
     },
@@ -84,17 +75,14 @@ const data = {
         {
           title: "Basic Forms",
           url: "#",
-          isActive: true,
         },
         {
           title: "Advanced Forms",
           url: "#",
-          isActive: true,
         },
         {
           title: "Form Validation",
           url: "#",
-          isActive: true,
         },
       ],
     },
@@ -106,22 +94,18 @@ const data = {
         {
           title: "Pricing Cards",
           url: "#",
-          isActive: true,
         },
         {
           title: "Product Cards",
           url: "#",
-          isActive: true,
         },
         {
           title: "Charts",
           url: "#",
-          isActive: true,
         },
         {
           title: "Timeline",
           url: "#",
-          isActive: true,
         },
         {
           title: "Toasts",
