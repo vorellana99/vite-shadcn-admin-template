@@ -162,10 +162,11 @@
   padding-right: 2.5rem;
 }
 
-/* Mismo efecto para ítems directos (sin sub-menú). Offset: solo SidebarGroup p-2 (0.5rem) */
+/* Same effect for direct items (without sub-menu). Offset: SidebarGroup p-2 (0.5rem) */
+/* width: auto is necessary because w-full (width: 100%) prevents the negative margin from extending the element */
 .direct-menu-item[data-active="true"] {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  width: auto;
   margin-right: -0.5rem;
-  padding-right: 1rem;
 }
