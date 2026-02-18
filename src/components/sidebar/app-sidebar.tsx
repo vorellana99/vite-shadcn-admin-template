@@ -14,7 +14,6 @@ import {
 } from "lucide-react"
 
 import { NavMain } from "@/components/sidebar/nav-main"
-import { NavProjects } from "@/components/sidebar/nav-projects"
 import { NavUser } from "@/components/sidebar/nav-user"
 import { TeamSwitcher } from "@/components/sidebar/team-switcher"
 import {
@@ -55,107 +54,80 @@ const data = {
       icon: LayoutDashboard,
     },
     {
-      title: "Playground",
+      title: "Tables",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Basic Tables",
           url: "#",
           isActive: true,
         },
         {
-          title: "Starred",
+          title: "Advanced Tables",
           url: "#",
+          isActive: true,
         },
         {
-          title: "Settings",
+          title: "Datatable",
           url: "#",
+          isActive: true,
         },
       ],
     },
     {
-      title: "Models",
+      title: "Forms",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
+          title: "Basic Forms",
           url: "#",
+          isActive: true,
         },
         {
-          title: "Explorer",
+          title: "Advanced Forms",
           url: "#",
+          isActive: true,
         },
         {
-          title: "Quantum",
+          title: "Form Validation",
           url: "#",
+          isActive: true,
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Examples",
       url: "#",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
+          title: "Pricing Cards",
           url: "#",
+          isActive: true,
         },
         {
-          title: "Get Started",
+          title: "Product Cards",
           url: "#",
+          isActive: true,
         },
         {
-          title: "Tutorials",
+          title: "Charts",
           url: "#",
+          isActive: true,
         },
         {
-          title: "Changelog",
+          title: "Timeline",
+          url: "#",
+          isActive: true,
+        },
+        {
+          title: "Toasts",
           url: "#",
         },
       ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 }
@@ -168,7 +140,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
