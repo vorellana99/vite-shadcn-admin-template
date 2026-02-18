@@ -163,6 +163,7 @@ export function ChartAreaInteractive() {
   })
 
   return (
+    <div className="px-4 lg:px-6">
     <Card className="@container/card">
       <CardHeader>
         <CardTitle>Total Visitors</CardTitle>
@@ -285,5 +286,6 @@ export function ChartAreaInteractive() {
         </ChartContainer>
       </CardContent>
     </Card>
+    </div>
   )
 }
