@@ -56,11 +56,15 @@ export function NavMain({
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {items.map((item) => {
+          const hasActiveChild = item.items?.some(
+            (sub) => selectedId === `${item.title}-${sub.title}`
+          )
+          return (
           <Collapsible
             key={item.title}
             asChild
-            defaultOpen={item.isActive}
+            defaultOpen={item.isActive || hasActiveChild}
             className="group/collapsible"
           >
             <SidebarMenuItem>
@@ -96,7 +100,8 @@ export function NavMain({
               </CollapsibleContent>
             </SidebarMenuItem>
           </Collapsible>
-        ))}
+          )
+        })}
       </SidebarMenu>
     </SidebarGroup>
   )
