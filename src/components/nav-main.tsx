@@ -52,54 +52,82 @@ export function NavMain({
     persistedSelectedId = id
   }
 
+  const isDirectItem = (item: typeof items[number]) =>
+    !item.items || item.items.length === 0
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
+          if (isDirectItem(item)) {
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  asChild
+                  tooltip={item.title}
+                  isActive={selectedId === item.title}
+                  className="direct-menu-item"
+                >
+                  <a
+                    href={item.url}
+                    onClick={(e) => {
+                      setSelectedId(item.title)
+                      if (item.url === "#") e.preventDefault()
+                      if (isMobile) setOpenMobile(false)
+                    }}
+                  >
+                    {item.icon && <item.icon />}
+                    <span className="font-semibold">{item.title}</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )
+          }
+
           const hasActiveChild = item.items?.some(
             (sub) => selectedId === `${item.title}-${sub.title}`
           )
           return (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive || hasActiveChild}
-            className="group/collapsible"
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span className="font-semibold">{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-500 group-data-[state=open]/collapsible:rotate-90" />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="collapsible-menu-animation">
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton
-                        asChild
-                        isActive={selectedId === `${item.title}-${subItem.title}`}
-                      >
-                        <a
-                          href={subItem.url}
-                          onClick={(e) => {
-                            setSelectedId(`${item.title}-${subItem.title}`)
-                            if (subItem.url === "#") e.preventDefault()
-                            if (isMobile) setOpenMobile(false)
-                          }}
+            <Collapsible
+              key={item.title}
+              asChild
+              defaultOpen={item.isActive || hasActiveChild}
+              className="group/collapsible"
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton tooltip={item.title}>
+                    {item.icon && <item.icon />}
+                    <span className="font-semibold">{item.title}</span>
+                    <ChevronRight className="ml-auto transition-transform duration-500 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="collapsible-menu-animation">
+                  <SidebarMenuSub>
+                    {item.items?.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton
+                          asChild
+                          isActive={selectedId === `${item.title}-${subItem.title}`}
                         >
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
+                          <a
+                            href={subItem.url}
+                            onClick={(e) => {
+                              setSelectedId(`${item.title}-${subItem.title}`)
+                              if (subItem.url === "#") e.preventDefault()
+                              if (isMobile) setOpenMobile(false)
+                            }}
+                          >
+                            <span>{subItem.title}</span>
+                          </a>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
           )
         })}
       </SidebarMenu>
