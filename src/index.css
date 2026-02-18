@@ -128,6 +128,8 @@
 /* Animación del Collapsible del sidebar in x milliseconds */
 .collapsible-menu-animation {
   overflow: hidden;
+  margin-right: -0.5rem;
+  padding-right: 0.5rem;
 }
 .collapsible-menu-animation[data-state="open"] {
   animation: collapsible-slide-down 300ms ease-out;
@@ -150,4 +152,12 @@
   to {
     height: 0;
   }
+}
+
+/* The background of the active menu extends to the right edge of the sidebar; for this, these negative values ​​are necessary. */
+[data-slot="sidebar-menu-sub-button"][data-active="true"] {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: -2rem;
+  padding-right: 2.5rem;
 }
