@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react"
 import {
+  type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -16,9 +18,11 @@ import {
   IconChevronsRight,
   IconLayoutColumns,
   IconPlus,
+  IconX,
 } from "@tabler/icons-react"
 
 import type { Product } from "../data"
+import { categories } from "../data"
 import { getProductColumns } from "./product-columns"
 import { Button } from "@/shared/ui/button"
 import {
@@ -27,6 +31,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu"
+import { Input } from "@/shared/ui/input"
 import { Label } from "@/shared/ui/label"
 import {
   Select,
@@ -59,60 +64,121 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [globalFilter, setGlobalFilter] = useState("")
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
 
   const table = useReactTable({
     data: products,
     columns,
-    state: { sorting, columnVisibility, pagination },
+    state: { sorting, columnVisibility, columnFilters, globalFilter, pagination },
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   })
 
+  const hasActiveFilters = globalFilter !== "" || columnFilters.length > 0
+
+  function resetFilters() {
+    setGlobalFilter("")
+    setColumnFilters([])
+  }
+
+  const categoryFilterValue = (table.getColumn("category")?.getFilterValue() as string) ?? ""
+  const statusFilterValue = (table.getColumn("status")?.getFilterValue() as string) ?? ""
+
   return (
     <>
-      <div className="flex items-center justify-between px-4 lg:px-6">
-        <div />
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <IconLayoutColumns />
-                <span className="hidden lg:inline">Customize Columns</span>
-                <span className="lg:hidden">Columns</span>
-                <IconChevronDown />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              {table
-                .getAllColumns()
-                .filter(
-                  (column) =>
-                    typeof column.accessorFn !== "undefined" &&
-                    column.getCanHide(),
-                )
-                .map((column) => (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
+      <div className="flex flex-col gap-4 px-4 lg:px-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-1 flex-wrap items-center gap-2">
+            <Input
+              placeholder="Search products..."
+              value={globalFilter}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              className="h-9 w-full sm:w-64"
+            />
+            <Select
+              value={categoryFilterValue || "_all"}
+              onValueChange={(v) =>
+                table.getColumn("category")?.setFilterValue(v === "_all" ? undefined : v)
+              }
+            >
+              <SelectTrigger size="sm" className="w-full sm:w-40">
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="_all">All Categories</SelectItem>
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                 ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button size="sm" onClick={onAdd}>
-            <IconPlus />
-            <span className="hidden lg:inline">Add Product</span>
-          </Button>
+              </SelectContent>
+            </Select>
+            <Select
+              value={statusFilterValue || "_all"}
+              onValueChange={(v) =>
+                table.getColumn("status")?.setFilterValue(v === "_all" ? undefined : v)
+              }
+            >
+              <SelectTrigger size="sm" className="w-full sm:w-40">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="_all">All Statuses</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="discontinued">Discontinued</SelectItem>
+              </SelectContent>
+            </Select>
+            {hasActiveFilters && (
+              <Button variant="ghost" size="sm" onClick={resetFilters}>
+                <IconX className="size-4" />
+                Reset
+              </Button>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <IconLayoutColumns />
+                  <span className="hidden lg:inline">Customize Columns</span>
+                  <span className="lg:hidden">Columns</span>
+                  <IconChevronDown />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                {table
+                  .getAllColumns()
+                  .filter(
+                    (column) =>
+                      typeof column.accessorFn !== "undefined" &&
+                      column.getCanHide(),
+                  )
+                  .map((column) => (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Button size="sm" onClick={onAdd}>
+              <IconPlus />
+              <span className="hidden lg:inline">Add Product</span>
+            </Button>
+          </div>
         </div>
       </div>
 

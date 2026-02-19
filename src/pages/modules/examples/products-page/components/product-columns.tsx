@@ -1,5 +1,10 @@
-import type { ColumnDef } from "@tanstack/react-table"
-import { IconDotsVertical } from "@tabler/icons-react"
+import type { Column, ColumnDef } from "@tanstack/react-table"
+import {
+  IconArrowDown,
+  IconArrowUp,
+  IconArrowsSort,
+  IconDotsVertical,
+} from "@tabler/icons-react"
 
 import type { Product } from "../data"
 import { Badge } from "@/shared/ui/badge"
@@ -17,6 +22,26 @@ interface ColumnCallbacks {
   onDelete: (product: Product) => void
 }
 
+function SortableHeader({ column, children, className }: { column: Column<Product>; children: React.ReactNode; className?: string }) {
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      className={`-ml-3 ${className ?? ""}`}
+      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    >
+      {children}
+      {column.getIsSorted() === "asc" ? (
+        <IconArrowUp className="size-4" />
+      ) : column.getIsSorted() === "desc" ? (
+        <IconArrowDown className="size-4" />
+      ) : (
+        <IconArrowsSort className="text-muted-foreground/50 size-4" />
+      )}
+    </Button>
+  )
+}
+
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value)
 }
@@ -25,24 +50,28 @@ export function getProductColumns({ onEdit, onDelete }: ColumnCallbacks): Column
   return [
     {
       accessorKey: "name",
-      header: "Name",
+      header: ({ column }) => <SortableHeader column={column}>Name</SortableHeader>,
       cell: ({ row }) => <span className="font-medium">{row.getValue("name")}</span>,
       enableHiding: false,
     },
     {
       accessorKey: "sku",
-      header: "SKU",
+      header: ({ column }) => <SortableHeader column={column}>SKU</SortableHeader>,
       cell: ({ row }) => (
         <span className="text-muted-foreground">{row.getValue("sku")}</span>
       ),
     },
     {
       accessorKey: "category",
-      header: "Category",
+      header: ({ column }) => <SortableHeader column={column}>Category</SortableHeader>,
     },
     {
       accessorKey: "price",
-      header: () => <div className="text-right">Price</div>,
+      header: ({ column }) => (
+        <div className="flex justify-end">
+          <SortableHeader column={column}>Price</SortableHeader>
+        </div>
+      ),
       cell: ({ row }) => (
         <div className="text-right tabular-nums">
           {formatCurrency(row.getValue("price"))}
@@ -51,7 +80,11 @@ export function getProductColumns({ onEdit, onDelete }: ColumnCallbacks): Column
     },
     {
       accessorKey: "stock",
-      header: () => <div className="text-right">Stock</div>,
+      header: ({ column }) => (
+        <div className="flex justify-end">
+          <SortableHeader column={column}>Stock</SortableHeader>
+        </div>
+      ),
       cell: ({ row }) => {
         const stock = row.getValue("stock") as number
         return (
@@ -65,7 +98,7 @@ export function getProductColumns({ onEdit, onDelete }: ColumnCallbacks): Column
     },
     {
       accessorKey: "status",
-      header: "Status",
+      header: ({ column }) => <SortableHeader column={column}>Status</SortableHeader>,
       cell: ({ row }) => {
         const status = row.getValue("status") as Product["status"]
         return (
