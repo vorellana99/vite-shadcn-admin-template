@@ -7,6 +7,8 @@ import { SidebarInset, SidebarProvider } from "@/shared/ui/sidebar"
 const routeMeta: Record<string, { page: string; module?: string }> = {
   "/": { page: "Dashboard" },
   "/tables/basic": { page: "Basic Tables", module: "Tables" },
+  "/tables/advanced": { page: "Advanced Tables", module: "Tables" },
+  "/tables/datatable": { page: "Datatable", module: "Tables" },
 }
 
 export function AppLayout() {

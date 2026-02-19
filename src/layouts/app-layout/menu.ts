@@ -48,11 +48,11 @@ export const menuData = {
         },
         {
           title: "Advanced Tables",
-          url: "#",
+          url: "/tables/advanced",
         },
         {
           title: "Datatable",
-          url: "#",
+          url: "/tables/datatable",
         },
       ],
     },
