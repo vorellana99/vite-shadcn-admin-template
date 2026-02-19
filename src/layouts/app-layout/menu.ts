@@ -85,8 +85,8 @@ export const menuData = {
           url: "/examples/customers",
         },
         {
-          title: "Product Cards",
-          url: "#",
+          title: "Products",
+          url: "/examples/products"
         },
         {
           title: "Charts",

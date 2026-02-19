@@ -10,6 +10,7 @@ const routeMeta: Record<string, { page: string; module?: string }> = {
   "/tables/advanced": { page: "Advanced Tables", module: "Tables" },
   "/tables/datatable": { page: "Datatable", module: "Tables" },
   "/examples/customers": { page: "Customers", module: "Examples" },
+  "/examples/products": { page: "Products", module: "Examples" },
 }
 
 export function AppLayout() {
