@@ -1,16 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table"
-import { IconDotsVertical } from "@tabler/icons-react"
 
 import type { Customer } from "../data"
-import { Badge } from "@/shared/ui/badge"
-import { Button } from "@/shared/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/shared/ui/dropdown-menu"
+  DataTableRowActions,
+  SortableHeader,
+} from "@/shared/components/data-table"
+import { Badge } from "@/shared/ui/badge"
 
 interface ColumnCallbacks {
   onEdit: (customer: Customer) => void
@@ -21,13 +16,13 @@ export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): Colum
   return [
     {
       accessorKey: "name",
-      header: "Name",
+      header: ({ column }) => <SortableHeader column={column}>Name</SortableHeader>,
       cell: ({ row }) => <span className="font-medium">{row.getValue("name")}</span>,
       enableHiding: false,
     },
     {
       accessorKey: "email",
-      header: "Email",
+      header: ({ column }) => <SortableHeader column={column}>Email</SortableHeader>,
     },
     {
       accessorKey: "phone",
@@ -35,11 +30,11 @@ export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): Colum
     },
     {
       accessorKey: "company",
-      header: "Company",
+      header: ({ column }) => <SortableHeader column={column}>Company</SortableHeader>,
     },
     {
       accessorKey: "status",
-      header: "Status",
+      header: ({ column }) => <SortableHeader column={column}>Status</SortableHeader>,
       cell: ({ row }) => {
         const status = row.getValue("status") as Customer["status"]
         return (
@@ -51,39 +46,17 @@ export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): Colum
     },
     {
       accessorKey: "createdAt",
-      header: "Created",
+      header: ({ column }) => <SortableHeader column={column}>Created</SortableHeader>,
     },
     {
       id: "actions",
-      cell: ({ row }) => {
-        const customer = row.original
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
-                size="icon"
-              >
-                <IconDotsVertical />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-32">
-              <DropdownMenuItem onClick={() => onEdit(customer)}>
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                variant="destructive"
-                onClick={() => onDelete(customer)}
-              >
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )
-      },
+      cell: ({ row }) => (
+        <DataTableRowActions
+          row={row.original}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      ),
     },
   ]
 }
