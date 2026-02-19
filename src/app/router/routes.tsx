@@ -5,6 +5,7 @@ import DashboardPage from "@/pages/modules/dashboard/dashboard-page/dashboard-pa
 import BasicTablesPage from "@/pages/modules/tables/basic-tables-page/basic-tables-page"
 import AdvancedTablesPage from "@/pages/modules/tables/advanced-tables-page/advanced-tables-page"
 import DatatablePage from "@/pages/modules/tables/datatable-page/datatable-page"
+import CustomersPage from "@/pages/modules/examples/customers-page/customers-page"
 
 /** Rutas de la app. Se usa como hijo directo de <Routes> en router/index.tsx */
 export const appRoutes = (
@@ -13,5 +14,6 @@ export const appRoutes = (
     <Route path="/tables/basic" element={<BasicTablesPage />} />
     <Route path="/tables/advanced" element={<AdvancedTablesPage />} />
     <Route path="/tables/datatable" element={<DatatablePage />} />
+    <Route path="/examples/customers" element={<CustomersPage />} />
   </Route>
 )

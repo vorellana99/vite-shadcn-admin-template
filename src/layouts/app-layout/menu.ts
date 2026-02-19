@@ -81,8 +81,8 @@ export const menuData = {
       icon: BookOpen,
       items: [
         {
-          title: "Pricing Cards",
-          url: "#",
+          title: "Customers",
+          url: "/examples/customers",
         },
         {
           title: "Product Cards",
