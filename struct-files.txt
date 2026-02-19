@@ -1,0 +1,202 @@
+src/
+├─ app/                                  # Bootstrap / composición de la app
+│  ├─ main.tsx                           # ReactDOM.createRoot(...)
+│  ├─ App.tsx                            # Shell: layouts + router
+│  ├─ router/
+│  │  ├─ index.tsx                       # createBrowserRouter / RouterProvider
+│  │  ├─ routes.public.tsx               # rutas públicas (login, etc.)
+│  │  ├─ routes.private.tsx              # rutas privadas (app)
+│  │  └─ routes.tsx                      # composición final de rutas
+│  ├─ providers/
+│  │  ├─ AuthProvider.tsx                # contexto auth (user/session)
+│  │  ├─ QueryProvider.tsx               # TanStack Query
+│  │  ├─ ThemeProvider.tsx               # theme/dark mode
+│  │  └─ AppProviders.tsx                # wrapper que une todos
+│  └─ config/
+│     ├─ env.ts                          # import.meta.env tipado + helpers
+│     ├─ constants.ts                    # constantes globales
+│     └─ appInfo.ts                      # nombre app, versión, etc.
+│
+├─ core/                                 # Infra del sistema (no negocio directo)
+│  ├─ auth/
+│  │  ├─ pages/
+│  │  │  ├─ LoginPage/
+│  │  │  │  ├─ LoginPage.tsx
+│  │  │  │  └─ components/
+│  │  │  ├─ ForgotPasswordPage/
+│  │  │  └─ ResetPasswordPage/
+│  │  ├─ api/
+│  │  │  ├─ auth.client.ts               # llamadas login/refresh/me
+│  │  │  └─ auth.dto.ts                  # request/response DTOs
+│  │  ├─ hooks/
+│  │  │  ├─ useLogin.ts
+│  │  │  └─ useLogout.ts
+│  │  ├─ services/
+│  │  │  ├─ tokenStorage.ts              # localStorage/cookies
+│  │  │  └─ sessionService.ts            # refresh token, current user
+│  │  └─ types/
+│  │     ├─ auth.types.ts
+│  │     └─ auth.schemas.ts              # (si usas Zod)
+│  │
+│  ├─ onboarding/
+│  │  ├─ pages/
+│  │  │  ├─ WelcomePage/
+│  │  │  ├─ SetupBuildingPage/
+│  │  │  ├─ SetupBillingPage/
+│  │  │  └─ FinishPage/
+│  │  ├─ hooks/
+│  │  ├─ api/
+│  │  └─ types/
+│  │
+│  ├─ permissions/
+│  │  ├─ permissions.ts                  # enums/strings de permisos
+│  │  ├─ roles.ts                        # roles (Admin, Contador, etc.)
+│  │  ├─ ability.ts                      # helper para can()/cannot()
+│  │  └─ hooks/
+│  │     └─ useCan.ts                    # hook para validar permisos
+│  │
+│  ├─ tenancy/
+│  │  ├─ services/
+│  │  │  ├─ tenantStorage.ts             # tenantId actual
+│  │  │  └─ tenantResolver.ts            # cómo se obtiene (subdominio, etc.)
+│  │  ├─ hooks/
+│  │  │  └─ useTenant.ts
+│  │  └─ types/
+│  │
+│  └─ guards/
+│     ├─ RequireAuth.tsx                 # bloquea si no hay sesión
+│     ├─ RequireRole.tsx                 # bloquea por rol
+│     └─ RequirePermission.tsx           # bloquea por permiso
+│
+├─ layouts/                              # Estructura visual
+│  ├─ AppLayout/
+│  │  ├─ AppLayout.tsx
+│  │  ├─ Sidebar.tsx
+│  │  ├─ Topbar.tsx
+│  │  ├─ menu.ts                         # items del menú
+│  │  └─ components/
+│  │     ├─ TenantSwitcher.tsx
+│  │     └─ UserMenu.tsx
+│  └─ AuthLayout/
+│     └─ AuthLayout.tsx
+│
+├─ modules/                              # Dominio de negocio (menú principal)
+│  ├─ dashboard/
+│  │  ├─ pages/
+│  │  │  └─ DashboardPage/
+│  │  │     ├─ DashboardPage.tsx
+│  │  │     └─ components/
+│  │  ├─ api/
+│  │  ├─ hooks/
+│  │  └─ types/
+│  │
+│  ├─ billing/                           # Cobranza
+│  │  ├─ pages/
+│  │  │  ├─ MonthlyFeesPage/
+│  │  │  ├─ GenerateFeesPage/
+│  │  │  ├─ AccountStatusPage/
+│  │  │  └─ DefaultersPage/
+│  │  ├─ api/
+│  │  │  ├─ billing.client.ts
+│  │  │  └─ billing.dto.ts
+│  │  ├─ hooks/
+│  │  └─ types/
+│  │
+│  ├─ payments/                          # Pagos
+│  │  ├─ pages/
+│  │  │  ├─ RegisterPaymentPage/
+│  │  │  ├─ PaymentHistoryPage/
+│  │  │  └─ ReceiptsPage/
+│  │  ├─ api/
+│  │  ├─ hooks/
+│  │  └─ types/
+│  │
+│  ├─ units/                             # Departamentos
+│  │  ├─ pages/
+│  │  │  ├─ UnitsListPage/
+│  │  │  └─ CreateUnitPage/
+│  │  ├─ api/
+│  │  ├─ hooks/
+│  │  └─ types/
+│  │
+│  ├─ residents/                         # Residentes
+│  │  ├─ pages/
+│  │  │  ├─ ResidentsListPage/
+│  │  │  ├─ InviteResidentPage/
+│  │  │  └─ ResidentDetailPage/
+│  │  ├─ api/
+│  │  ├─ hooks/
+│  │  └─ types/
+│  │
+│  ├─ reports/
+│  │  ├─ pages/
+│  │  │  ├─ CollectionsReportPage/
+│  │  │  ├─ PaymentsReportPage/
+│  │  │  └─ OccupancyReportPage/
+│  │  ├─ api/
+│  │  ├─ hooks/
+│  │  └─ types/
+│  │
+│  ├─ settings/
+│  │  ├─ pages/
+│  │  │  ├─ BuildingPage/
+│  │  │  ├─ ConceptsPage/
+│  │  │  ├─ UsersPage/
+│  │  │  └─ PaymentMethodsPage/
+│  │  ├─ api/
+│  │  ├─ hooks/
+│  │  └─ types/
+│  │
+│  └─ plans/                             # Plan y facturación del SaaS
+│     ├─ pages/
+│     │  ├─ PlanOverviewPage/
+│     │  └─ InvoicesPage/
+│     ├─ api/
+│     ├─ hooks/
+│     └─ types/
+│
+├─ shared/                               # Reutilizable / agnóstico al dominio
+│  ├─ ui/                                # shadcn/ui + wrappers
+│  │  ├─ button.tsx
+│  │  ├─ input.tsx
+│  │  ├─ dialog.tsx
+│  │  └─ table.tsx
+│  ├─ components/
+│  │  ├─ PageHeader/
+│  │  ├─ DataTable/
+│  │  ├─ EmptyState/
+│  │  ├─ ConfirmDialog/
+│  │  └─ Loading/
+│  ├─ hooks/
+│  │  ├─ useDebounce.ts
+│  │  ├─ usePagination.ts
+│  │  └─ useDisclosure.ts
+│  ├─ services/
+│  │  ├─ http/
+│  │  │  ├─ httpClient.ts                # fetch/axios + baseURL
+│  │  │  ├─ interceptors.ts              # auth header, refresh, etc.
+│  │  │  └─ httpErrors.ts                # normalización de errores
+│  │  ├─ logger/
+│  │  │  └─ logger.ts
+│  │  └─ storage/
+│  │     ├─ local.ts
+│  │     └─ session.ts
+│  ├─ lib/
+│  │  ├─ date.ts                         # parse/format fechas
+│  │  ├─ currency.ts                     # PEN
+│  │  ├─ format.ts
+│  │  └─ validators.ts
+│  ├─ types/
+│  │  ├─ common.ts
+│  │  ├─ pagination.ts
+│  │  └─ api.ts
+│  └─ styles/
+│     ├─ globals.css
+│     └─ tailwind.css
+│
+├─ assets/
+│  ├─ images/
+│  ├─ icons/
+│  └─ logo/
+│
+└─ vite-env.d.ts
