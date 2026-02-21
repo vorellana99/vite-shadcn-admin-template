@@ -70,7 +70,7 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: hsl(228 78% 36%);
+  --sidebar: hsl(215 78% 26%);
   --sidebar-foreground: hsl(0 0% 100%);
   --sidebar-primary: hsl(217 91% 60%);
   --sidebar-primary-foreground: hsl(0 0% 100%);
@@ -119,6 +119,7 @@
     @apply border-border outline-ring/50;
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     @apply bg-background text-foreground;
@@ -131,24 +132,30 @@
   margin-right: -0.5rem;
   padding-right: 0.5rem;
 }
+
 .collapsible-menu-animation[data-state="open"] {
   animation: collapsible-slide-down 300ms ease-out;
 }
+
 .collapsible-menu-animation[data-state="closed"] {
   animation: collapsible-slide-up 300ms ease-out;
 }
+
 @keyframes collapsible-slide-down {
   from {
     height: 0;
   }
+
   to {
     height: var(--radix-collapsible-content-height);
   }
 }
+
 @keyframes collapsible-slide-up {
   from {
     height: var(--radix-collapsible-content-height);
   }
+
   to {
     height: 0;
   }
