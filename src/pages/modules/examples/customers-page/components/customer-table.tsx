@@ -124,7 +124,7 @@ export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTa
       <div className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
         <div className="overflow-hidden rounded-lg border">
           <Table>
-            <TableHeader className="bg-table-header [&_th]:text-white [&_button]:!text-white [&_svg]:!text-white hover:[&_button]:bg-white/10 sticky top-0 z-10">
+            <TableHeader className="bg-table-header [&_th]:text-white [&_button]:!text-white [&_svg]:!text-white [&_button:hover]:bg-white/10 sticky top-0 z-10">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id} className="hover:bg-transparent">
                   {headerGroup.headers.map((header) => (
