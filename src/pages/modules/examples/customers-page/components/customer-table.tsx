@@ -17,6 +17,7 @@ import { DataTablePagination } from "@/shared/components/data-table/data-table-p
 import { DataTableView } from "@/shared/components/data-table/data-table-view"
 import { DataTableColumnToggle } from "@/shared/components/data-table"
 import { Button } from "@/shared/ui/button"
+import { AppButton } from "@/shared/components/buttons/app-button"
 import { Input } from "@/shared/ui/input"
 import {
   Select,
@@ -103,10 +104,10 @@ export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTa
           </div>
           <div className="flex items-center gap-2">
             <DataTableColumnToggle table={table} />
-            <Button size="sm" onClick={onAdd}>
+            <AppButton size="sm" onClick={onAdd}>
               <IconPlus />
               <span className="hidden lg:inline">Add Customer</span>
-            </Button>
+            </AppButton>
           </div>
         </div>
       </div>

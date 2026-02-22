@@ -20,6 +20,7 @@ import {
 } from "@/shared/components/data-table"
 import { DataTableView } from "@/shared/components/data-table/data-table-view"
 import { Button } from "@/shared/ui/button"
+import { AppButton } from "@/shared/components/buttons/app-button"
 import { Input } from "@/shared/ui/input"
 import {
   Select,
@@ -124,10 +125,10 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
           </div>
           <div className="flex items-center gap-2">
             <DataTableColumnToggle table={table} />
-            <Button size="sm" onClick={onAdd}>
+            <AppButton size="sm" onClick={onAdd}>
               <IconPlus />
               <span className="hidden lg:inline">Add Product</span>
-            </Button>
+            </AppButton>
           </div>
         </div>
       </div>

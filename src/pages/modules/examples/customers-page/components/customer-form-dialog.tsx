@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import type { Customer, FormErrors } from "../data"
 import { formSchema } from "../data"
-import { Button } from "@/shared/ui/button"
+import { AppButton } from "@/shared/components/buttons/app-button"
 import {
   Dialog,
   DialogContent,
@@ -113,10 +113,10 @@ export function CustomerFormDialog({
             </Select>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <AppButton type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancel
-            </Button>
-            <Button type="submit">Save</Button>
+            </AppButton>
+            <AppButton type="submit">Save</AppButton>
           </DialogFooter>
         </form>
       </DialogContent>
