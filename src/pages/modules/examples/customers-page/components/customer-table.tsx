@@ -92,6 +92,9 @@ export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTa
               <SelectContent>
                 <SelectItem value="_all">All Statuses</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="vip">VIP</SelectItem>
+                <SelectItem value="suspended">Suspended</SelectItem>
                 <SelectItem value="inactive">Inactive</SelectItem>
               </SelectContent>
             </Select>

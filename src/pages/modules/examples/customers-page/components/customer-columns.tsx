@@ -1,11 +1,10 @@
 import type { ColumnDef } from "@tanstack/react-table"
-
+import { CustomerStatusBadge } from "./customer-status-badge"
 import type { Customer } from "../data"
 import {
   DataTableRowActions,
   SortableHeader,
 } from "@/shared/components/data-table"
-import { Badge } from "@/shared/ui/badge"
 
 interface ColumnCallbacks {
   onEdit: (customer: Customer) => void
@@ -35,14 +34,7 @@ export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): Colum
     {
       accessorKey: "status",
       header: ({ column }) => <SortableHeader column={column}>Status</SortableHeader>,
-      cell: ({ row }) => {
-        const status = row.getValue("status") as Customer["status"]
-        return (
-          <Badge variant={status === "active" ? "default" : "secondary"}>
-            {status === "active" ? "Active" : "Inactive"}
-          </Badge>
-        )
-      },
+      cell: ({ row }) => <CustomerStatusBadge status={row.getValue("status")} />,
     },
     {
       accessorKey: "createdAt",

@@ -6,7 +6,7 @@ export const customerSchema = z.object({
   email: z.string().email("Invalid email"),
   phone: z.string().min(1, "Phone is required"),
   company: z.string().min(1, "Company is required"),
-  status: z.enum(["active", "inactive"]),
+  status: z.enum(["active", "inactive", "pending", "suspended", "vip"]),
   createdAt: z.string(),
 })
 
@@ -34,21 +34,32 @@ const demoCustomers: Customer[] = [
   { id: 13, name: "Marco Rossi", email: "marco@hooli.com", phone: "+39 333-5550113", company: "Hooli", status: "active", createdAt: "2025-04-05" },
   { id: 14, name: "Natasha Petrova", email: "natasha@piedpiper.com", phone: "+7 916-5550114", company: "Pied Piper", status: "active", createdAt: "2025-04-10" },
   { id: 15, name: "Oliver Thompson", email: "oliver@dundermifflin.com", phone: "+1 555-0115", company: "Dunder Mifflin", status: "inactive", createdAt: "2025-04-15" },
+  { id: 16, name: "Elena Gilbert", email: "elena@gilbert.com", phone: "+1 555-0116", company: "Mystic Grill", status: "pending", createdAt: "2025-04-20" },
+  { id: 17, name: "Stefan Salvatore", email: "stefan@salvatore.com", phone: "+1 555-0117", company: "Brothers LLC", status: "vip", createdAt: "2025-04-22" },
+  { id: 18, name: "Damon Salvatore", email: "damon@salvatore.com", phone: "+1 555-0118", company: "Brothers LLC", status: "suspended", createdAt: "2025-04-25" },
+  { id: 19, name: "Bonnie Bennett", email: "bonnie@bennett.com", phone: "+1 555-0119", company: "Witchy Crafts", status: "pending", createdAt: "2025-04-28" },
+  { id: 20, name: "Caroline Forbes", email: "caroline@forbes.com", phone: "+1 555-0120", company: "Events Pro", status: "vip", createdAt: "2025-05-01" },
+  { id: 21, name: "Alaric Saltzman", email: "alaric@saltzman.com", phone: "+1 555-0121", company: "Historians Inc", status: "active", createdAt: "2025-05-05" },
+  { id: 22, name: "Tyler Lockwood", email: "tyler@lockwood.com", phone: "+1 555-0122", company: "Lockwood Manor", status: "suspended", createdAt: "2025-05-08" },
+  { id: 23, name: "Matt Donovan", email: "matt@donovan.com", phone: "+1 555-0123", company: "Town Council", status: "active", createdAt: "2025-05-10" },
+  { id: 24, name: "Jeremy Gilbert", email: "jeremy@gilbert.com", phone: "+1 555-0124", company: "Gilbert Arts", status: "pending", createdAt: "2025-05-12" },
+  { id: 25, name: "Klaus Mikaelson", email: "klaus@mikaelson.com", phone: "+44 20-5550125", company: "The Originals", status: "vip", createdAt: "2025-05-15" },
 ]
 
 /**
  * Loads customers from localStorage. If empty, seeds with {@link demoCustomers}.
- *
- * Because localStorage takes priority, changes to `demoCustomers` in code won't
- * be visible until the stored data is cleared:
- * ```js
- * localStorage.removeItem("customers")
- * ```
  */
 export function loadCustomers(): Customer[] {
   try {
     const raw = localStorage.getItem(LS_KEY)
-    if (raw) return JSON.parse(raw) as Customer[]
+    if (raw) {
+      const parsed = JSON.parse(raw) as Customer[]
+      if (parsed.length < demoCustomers.length) {
+        localStorage.setItem(LS_KEY, JSON.stringify(demoCustomers))
+        return demoCustomers
+      }
+      return parsed
+    }
   } catch { /* ignore */ }
   localStorage.setItem(LS_KEY, JSON.stringify(demoCustomers))
   return demoCustomers
