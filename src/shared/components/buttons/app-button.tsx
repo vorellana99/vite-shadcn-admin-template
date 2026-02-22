@@ -27,7 +27,7 @@ const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
                 variant={variant}
                 className={cn(
                     // Project-level enhancements per variant
-                    variant === "default" && "shadow-sm",
+                    variant === "default" && "shadow-sm bg-primary/90 hover:brightness-110",
                     className,
                 )}
                 {...props}
