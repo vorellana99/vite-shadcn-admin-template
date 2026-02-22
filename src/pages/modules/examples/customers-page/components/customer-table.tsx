@@ -3,7 +3,6 @@ import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
-  flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
@@ -14,10 +13,9 @@ import { IconPlus, IconX } from "@tabler/icons-react"
 
 import type { Customer } from "../data"
 import { getCustomerColumns } from "./customer-columns"
-import {
-  DataTableColumnToggle,
-  DataTablePagination,
-} from "@/shared/components/data-table"
+import { DataTablePagination } from "@/shared/components/data-table/data-table-pagination"
+import { DataTableView } from "@/shared/components/data-table/data-table-view"
+import { DataTableColumnToggle } from "@/shared/components/data-table"
 import { Button } from "@/shared/ui/button"
 import { Input } from "@/shared/ui/input"
 import {
@@ -27,14 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/shared/ui/table"
 
 interface CustomerTableProps {
   customers: Customer[]
@@ -122,55 +112,7 @@ export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTa
       </div>
 
       <div className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
-        <div className="overflow-hidden rounded-lg border">
-          <Table>
-            <TableHeader className="bg-table-header [&_th]:text-white [&_button]:!text-white [&_svg]:!text-white [&_button:hover]:bg-white/10 sticky top-0 z-10">
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="hover:bg-transparent">
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id} colSpan={header.colSpan}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No customers found.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-
+        <DataTableView table={table} columnsLength={columns.length} />
         <DataTablePagination table={table} />
       </div>
     </>
