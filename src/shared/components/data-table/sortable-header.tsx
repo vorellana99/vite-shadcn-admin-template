@@ -31,7 +31,7 @@ export function SortableHeader<TData>({
       ) : column.getIsSorted() === "desc" ? (
         <IconArrowDown className="size-4" />
       ) : (
-        <IconArrowsSort className="text-muted-foreground/50 size-4" />
+        <IconArrowsSort className="size-4 opacity-70" />
       )}
     </Button>
   )

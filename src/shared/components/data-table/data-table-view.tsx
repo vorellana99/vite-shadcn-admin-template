@@ -20,7 +20,7 @@ export function DataTableView<TData>({
     return (
         <div className="overflow-hidden rounded-lg border">
             <Table>
-                <TableHeader className="bg-primary/10 [&_button:hover]:bg-primary/20 sticky top-0 z-10 [&_th]:text-primary">
+                <TableHeader className="bg-primary/90 [&_button:hover]:bg-white/10 sticky top-0 z-10 [&_th]:text-primary-foreground [&_svg]:text-primary-foreground [&_button]:text-primary-foreground hover:[&_button]:text-primary-foreground">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id} className="hover:bg-transparent">
                             {headerGroup.headers.map((header) => (
