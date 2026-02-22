@@ -113,6 +113,9 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
               <SelectContent>
                 <SelectItem value="_all">All Statuses</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="low_stock">Low Stock</SelectItem>
+                <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+                <SelectItem value="coming_soon">Coming Soon</SelectItem>
                 <SelectItem value="discontinued">Discontinued</SelectItem>
               </SelectContent>
             </Select>

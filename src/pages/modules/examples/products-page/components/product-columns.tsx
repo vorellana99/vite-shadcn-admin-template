@@ -1,11 +1,11 @@
 import type { ColumnDef } from "@tanstack/react-table"
-
-import type { Product } from "../data"
 import {
   DataTableRowActions,
   SortableHeader,
 } from "@/shared/components/data-table"
-import { Badge } from "@/shared/ui/badge"
+import { ProductStatusBadge } from "./product-status-badge"
+import { AppBadge } from "@/shared/components/badges/app-badge"
+import type { Product } from "../data"
 
 interface ColumnCallbacks {
   onEdit: (product: Product) => void
@@ -59,9 +59,9 @@ export function getProductColumns({ onEdit, onDelete }: ColumnCallbacks): Column
         const stock = row.getValue("stock") as number
         return (
           <div className="text-right">
-            <Badge variant={stock > 50 ? "secondary" : stock > 0 ? "outline" : "destructive"}>
+            <AppBadge variant={stock > 10 ? "secondary" : stock > 0 ? "outline" : "destructive"}>
               {stock > 0 ? stock : "Out of stock"}
-            </Badge>
+            </AppBadge>
           </div>
         )
       },
@@ -69,14 +69,9 @@ export function getProductColumns({ onEdit, onDelete }: ColumnCallbacks): Column
     {
       accessorKey: "status",
       header: ({ column }) => <SortableHeader column={column}>Status</SortableHeader>,
-      cell: ({ row }) => {
-        const status = row.getValue("status") as Product["status"]
-        return (
-          <Badge variant={status === "active" ? "default" : "secondary"}>
-            {status === "active" ? "Active" : "Discontinued"}
-          </Badge>
-        )
-      },
+      cell: ({ row }) => (
+        <ProductStatusBadge status={row.getValue("status")} />
+      ),
     },
     {
       id: "actions",
