@@ -38,7 +38,12 @@ export function CustomerFormDialog({
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [company, setCompany] = useState("")
-  const [status, setStatus] = useState<"active" | "inactive">("active")
+  const [status, setStatus] = useState<Customer["status"]>("active")
+  const [avatar, setAvatar] = useState("")
+  const [dob, setDob] = useState("")
+  const [address, setAddress] = useState("")
+  const [city, setCity] = useState("")
+  const [zip, setZip] = useState("")
   const [errors, setErrors] = useState<FormErrors>({})
 
   useEffect(() => {
@@ -48,13 +53,18 @@ export function CustomerFormDialog({
       setPhone(customer?.phone ?? "")
       setCompany(customer?.company ?? "")
       setStatus(customer?.status ?? "active")
+      setAvatar(customer?.avatar ?? "")
+      setDob(customer?.dob ?? "")
+      setAddress(customer?.address ?? "")
+      setCity(customer?.city ?? "")
+      setZip(customer?.zip ?? "")
       setErrors({})
     }
   }, [open, customer])
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const result = formSchema.safeParse({ name, email, phone, company, status })
+    const result = formSchema.safeParse({ name, email, phone, company, status, avatar, dob, address, city, zip })
     if (!result.success) {
       const fieldErrors: FormErrors = {}
       for (const issue of result.error.issues) {
@@ -70,25 +80,25 @@ export function CustomerFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{customer ? "Edit Customer" : "New Customer"}</DialogTitle>
           <DialogDescription>
             {customer ? "Update the customer information below." : "Fill in the details to create a new customer."}
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="cf-name">Name</Label>
-            <Input id="cf-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" />
-            {errors.name && <p className="text-destructive text-xs">{errors.name}</p>}
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="cf-email">Email</Label>
-            <Input id="cf-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email@company.com" />
-            {errors.email && <p className="text-destructive text-xs">{errors.email}</p>}
-          </div>
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div className="grid grid-cols-2 gap-6">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="cf-name">Name</Label>
+              <Input id="cf-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" />
+              {errors.name && <p className="text-destructive text-xs">{errors.name}</p>}
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="cf-email">Email</Label>
+              <Input id="cf-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email@company.com" />
+              {errors.email && <p className="text-destructive text-xs">{errors.email}</p>}
+            </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="cf-phone">Phone</Label>
               <Input id="cf-phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+1 555-0100" />
@@ -99,18 +109,41 @@ export function CustomerFormDialog({
               <Input id="cf-company" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Company name" />
               {errors.company && <p className="text-destructive text-xs">{errors.company}</p>}
             </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="cf-status">Status</Label>
-            <Select value={status} onValueChange={(v) => setStatus(v as "active" | "inactive")}>
-              <SelectTrigger id="cf-status" className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="cf-avatar">Profile Photo URL</Label>
+              <Input id="cf-avatar" value={avatar} onChange={(e) => setAvatar(e.target.value)} placeholder="https://..." />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="cf-dob">Date of Birth</Label>
+              <Input id="cf-dob" type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
+            </div>
+            <div className="flex flex-col gap-2 col-span-2">
+              <Label htmlFor="cf-address">Address</Label>
+              <Input id="cf-address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Street Name" />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="cf-city">City</Label>
+              <Input id="cf-city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="cf-zip">ZIP Code</Label>
+              <Input id="cf-zip" value={zip} onChange={(e) => setZip(e.target.value)} placeholder="00000" />
+            </div>
+            <div className="flex flex-col gap-2 col-span-2">
+              <Label htmlFor="cf-status">Status</Label>
+              <Select value={status} onValueChange={(v) => setStatus(v as Customer["status"])}>
+                <SelectTrigger id="cf-status" className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="suspended">Suspended</SelectItem>
+                  <SelectItem value="vip">VIP</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <DialogFooter>
             <AppButton type="button" variant="outline" onClick={() => onOpenChange(false)}>
