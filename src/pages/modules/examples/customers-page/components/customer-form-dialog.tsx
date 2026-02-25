@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Building, Calendar, Mail, MapPin, Phone, User, Camera, Globe } from "lucide-react"
 
 import type { Customer, FormErrors } from "../data"
 import { formSchema } from "../data"
@@ -20,6 +21,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select"
+import { Separator } from "@/shared/ui/separator"
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
+import { cn } from "@/shared/lib/utils"
 
 interface CustomerFormDialogProps {
   open: boolean
@@ -80,79 +84,165 @@ export function CustomerFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>{customer ? "Edit Customer" : "New Customer"}</DialogTitle>
-          <DialogDescription>
-            {customer ? "Update the customer information below." : "Fill in the details to create a new customer."}
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <div className="grid grid-cols-2 gap-6">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="cf-name">Name</Label>
-              <Input id="cf-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Full name" />
-              {errors.name && <p className="text-destructive text-xs">{errors.name}</p>}
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto [&>button]:text-primary-foreground [&>button]:hover:text-primary-foreground/80 [&>button>svg]:!size-5 [&>button]:top-5 [&>button]:right-5">
+        {/* Customized Header with Primary Background */}
+        <DialogHeader className="-mt-6 -mx-6 px-6 py-6 pb-6 bg-primary text-primary-foreground rounded-t-lg relative">
+          <div className="flex items-center gap-4">
+            <div className="bg-primary-foreground/20 p-3 rounded-xl shadow-sm">
+              <User className="w-6 h-6 text-primary-foreground" />
             </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="cf-email">Email</Label>
-              <Input id="cf-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email@company.com" />
-              {errors.email && <p className="text-destructive text-xs">{errors.email}</p>}
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="cf-phone">Phone</Label>
-              <Input id="cf-phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+1 555-0100" />
-              {errors.phone && <p className="text-destructive text-xs">{errors.phone}</p>}
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="cf-company">Company</Label>
-              <Input id="cf-company" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Company name" />
-              {errors.company && <p className="text-destructive text-xs">{errors.company}</p>}
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="cf-avatar">Profile Photo URL</Label>
-              <Input id="cf-avatar" value={avatar} onChange={(e) => setAvatar(e.target.value)} placeholder="https://..." />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="cf-dob">Date of Birth</Label>
-              <Input id="cf-dob" type="date" value={dob} onChange={(e) => setDob(e.target.value)} />
-            </div>
-            <div className="flex flex-col gap-2 col-span-2">
-              <Label htmlFor="cf-address">Address</Label>
-              <Input id="cf-address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Street Name" />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="cf-city">City</Label>
-              <Input id="cf-city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="cf-zip">ZIP Code</Label>
-              <Input id="cf-zip" value={zip} onChange={(e) => setZip(e.target.value)} placeholder="00000" />
-            </div>
-            <div className="flex flex-col gap-2 col-span-2">
-              <Label htmlFor="cf-status">Status</Label>
-              <Select value={status} onValueChange={(v) => setStatus(v as Customer["status"])}>
-                <SelectTrigger id="cf-status" className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="suspended">Suspended</SelectItem>
-                  <SelectItem value="vip">VIP</SelectItem>
-                </SelectContent>
-              </Select>
+            <div>
+              <DialogTitle className="text-xl font-bold text-primary-foreground">
+                {customer ? "Edit Customer Profile" : "Create New Customer"}
+              </DialogTitle>
+              <DialogDescription className="mt-1 text-primary-foreground/80">
+                {customer ? "Modify account details and preferences." : "Fill in the information to register a new client."}
+              </DialogDescription>
             </div>
           </div>
-          <DialogFooter>
-            <AppButton type="button" variant="outline" onClick={() => onOpenChange(false)}>
+        </DialogHeader>
+
+        <form onSubmit={handleSubmit} className="space-y-8 mt-4">
+          {/* SECTION: GENERAL INFO */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+              <Globe className="w-4 h-4" />
+              General Information
+            </div>
+            <Separator />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="md:col-span-1 flex flex-col items-center justify-center gap-3 bg-muted/30 rounded-lg p-4 border border-dashed border-muted-foreground/20">
+                <Avatar className="h-24 w-24 border-2 border-background shadow-md">
+                  <AvatarImage src={avatar} alt={name} />
+                  <AvatarFallback className="bg-primary/5 text-primary text-2xl font-bold">
+                    {name ? name.substring(0, 2).toUpperCase() : <Camera className="w-8 h-8 opacity-40" />}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-[10px] text-muted-foreground font-medium text-center">AVATAR PREVIEW</span>
+              </div>
+
+              <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="cf-name" className="text-xs font-bold">Full Name</Label>
+                  <div className="relative">
+                    <User className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input id="cf-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. John Doe" className="pl-9" />
+                  </div>
+                  {errors.name && <p className="text-destructive text-[10px] font-medium">{errors.name}</p>}
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="cf-email" className="text-xs font-bold">Email Address</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input id="cf-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@company.com" className="pl-9" />
+                  </div>
+                  {errors.email && <p className="text-destructive text-[10px] font-medium">{errors.email}</p>}
+                </div>
+
+                <div className="flex flex-col gap-2 col-span-2 sm:col-span-1">
+                  <Label htmlFor="cf-status" className="text-xs font-bold">Account Status</Label>
+                  <Select value={status} onValueChange={(v) => setStatus(v as Customer["status"])}>
+                    <SelectTrigger id="cf-status" className={cn(
+                      "w-full transition-colors",
+                      status === "active" && "border-green-500/50 bg-green-500/5",
+                      status === "vip" && "border-violet-500/50 bg-violet-500/5",
+                      status === "suspended" && "border-red-500/50 bg-red-500/5",
+                    )}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="suspended">Suspended</SelectItem>
+                      <SelectItem value="vip">VIP</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex flex-col gap-2 col-span-2 sm:col-span-1">
+                  <Label htmlFor="cf-avatar" className="text-xs font-bold">Photo URL</Label>
+                  <div className="relative">
+                    <Camera className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input id="cf-avatar" value={avatar} onChange={(e) => setAvatar(e.target.value)} placeholder="https://api.dicebear.com/..." className="pl-9" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION: CONTACT & COMPANY */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+              <Building className="w-4 h-4" />
+              Contact & Work
+            </div>
+            <Separator />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="cf-phone" className="text-xs font-bold">Phone Number</Label>
+                <div className="relative">
+                  <Phone className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input id="cf-phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+1 555-0100" className="pl-9" />
+                </div>
+                {errors.phone && <p className="text-destructive text-[10px] font-medium">{errors.phone}</p>}
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="cf-company" className="text-xs font-bold">Company Name</Label>
+                <div className="relative">
+                  <Building className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input id="cf-company" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="e.g. Acme Corp" className="pl-9" />
+                </div>
+                {errors.company && <p className="text-destructive text-[10px] font-medium">{errors.company}</p>}
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION: LOCATION & PERSONAL */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+              <MapPin className="w-4 h-4" />
+              Location & Details
+            </div>
+            <Separator />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="flex flex-col gap-2 sm:col-span-2">
+                <Label htmlFor="cf-address" className="text-xs font-bold">Street Address</Label>
+                <div className="relative">
+                  <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input id="cf-address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Street Name, Apt 4" className="pl-9" />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="cf-city" className="text-xs font-bold">City</Label>
+                <Input id="cf-city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="cf-zip" className="text-xs font-bold">ZIP Code</Label>
+                <Input id="cf-zip" value={zip} onChange={(e) => setZip(e.target.value)} placeholder="00000" />
+              </div>
+              <div className="flex flex-col gap-2 sm:col-span-2">
+                <Label htmlFor="cf-dob" className="text-xs font-bold">Date of Birth</Label>
+                <div className="relative">
+                  <Calendar className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input id="cf-dob" type="date" value={dob} onChange={(e) => setDob(e.target.value)} className="pl-9" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter className="pt-4">
+            <AppButton type="button" variant="ghost" onClick={() => onOpenChange(false)}>
               Cancel
             </AppButton>
-            <AppButton type="submit">Save</AppButton>
+            <AppButton type="submit" className="min-w-[120px] shadow-lg shadow-primary/20">
+              {customer ? "Update Profile" : "Create Customer"}
+            </AppButton>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   )
 }
+
