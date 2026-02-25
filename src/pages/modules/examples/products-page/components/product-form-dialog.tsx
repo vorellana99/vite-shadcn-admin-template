@@ -39,7 +39,7 @@ export function ProductFormDialog({
   const [category, setCategory] = useState("")
   const [price, setPrice] = useState("")
   const [stock, setStock] = useState("")
-  const [status, setStatus] = useState<"active" | "discontinued">("active")
+  const [status, setStatus] = useState<Product["status"]>("active")
   const [errors, setErrors] = useState<FormErrors>({})
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export function ProductFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{product ? "Edit Product" : "New Product"}</DialogTitle>
           <DialogDescription>
@@ -133,7 +133,10 @@ export function ProductFormDialog({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="low_stock">Low Stock</SelectItem>
+                <SelectItem value="out_of_stock">Out of Stock</SelectItem>
                 <SelectItem value="discontinued">Discontinued</SelectItem>
+                <SelectItem value="coming_soon">Coming Soon</SelectItem>
               </SelectContent>
             </Select>
           </div>
