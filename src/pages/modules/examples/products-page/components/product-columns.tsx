@@ -1,9 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import {
-  DataTableRowActions,
   SortableHeader,
 } from "@/shared/components/data-table"
 import { ProductStatusBadge } from "./product-status-badge"
+import { ProductRowActions } from "./product-row-actions"
 import { AppBadge } from "@/shared/components/badges/app-badge"
 import type { Product } from "../data"
 
@@ -76,8 +76,8 @@ export function getProductColumns({ onEdit, onDelete }: ColumnCallbacks): Column
     {
       id: "actions",
       cell: ({ row }) => (
-        <DataTableRowActions
-          row={row.original}
+        <ProductRowActions
+          product={row.original}
           onEdit={onEdit}
           onDelete={onDelete}
         />
