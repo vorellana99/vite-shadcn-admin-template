@@ -42,7 +42,7 @@ export function DataTableView<TData>({
                             <TableRow
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
-                                className="even:bg-muted/60 hover:bg-primary/20"
+                                className="relative even:bg-muted/60 hover:bg-primary/20"
                             >
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell key={cell.id}>

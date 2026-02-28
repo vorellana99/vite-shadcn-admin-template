@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import { type ReactNode, useState } from "react"
 import { IconDotsVertical } from "@tabler/icons-react"
 
 import { Button } from "@/shared/ui/button"
@@ -11,19 +11,39 @@ import {
 interface DataTableRowActionsProps {
   children: ReactNode
   triggerIcon?: ReactNode
+  isRowOverlay?: boolean
 }
 
 export function DataTableRowActions({
   children,
   triggerIcon,
+  isRowOverlay,
 }: DataTableRowActionsProps) {
+  const [open, setOpen] = useState(false)
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="data-[state=open]:bg-primary/10 flex size-8 p-0 border-primary/20 hover:border-primary/50 hover:bg-primary/5 text-primary transition-all duration-200"
+          className={
+            isRowOverlay
+              ? "absolute inset-0 h-full w-full border-none bg-transparent p-0 opacity-0 shadow-none hover:bg-transparent data-[state=open]:bg-transparent z-10 cursor-pointer"
+              : "data-[state=open]:bg-primary/10 flex size-8 p-0 border-primary/20 hover:border-primary/50 hover:bg-primary/5 text-primary transition-all duration-200"
+          }
           title="Acciones"
+          // Prevents the menu from opening on pointerdown (which blocks scroll)
+          onPointerDown={(e) => {
+            if (isRowOverlay) {
+              e.preventDefault()
+            }
+          }}
+          // Opens only on click (which is only fired if no scroll happened)
+          onClick={() => {
+            if (isRowOverlay) {
+              setOpen(true)
+            }
+          }}
         >
           {triggerIcon || <IconDotsVertical className="size-4" />}
           <span className="sr-only">Open menu</span>
