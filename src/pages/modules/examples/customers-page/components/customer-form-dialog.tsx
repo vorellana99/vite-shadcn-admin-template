@@ -21,7 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select"
-import { Separator } from "@/shared/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
 import { cn } from "@/shared/lib/utils"
 
@@ -102,14 +101,13 @@ export function CustomerFormDialog({
           </div>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-8 mt-4">
+        <form onSubmit={handleSubmit} className="space-y-10 md:space-y-8 mt-4">
           {/* SECTION: GENERAL INFO */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               <Globe className="w-4 h-4" />
               General Information
             </div>
-            <Separator />
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="md:col-span-1 flex flex-col items-center justify-center gap-3 bg-muted/30 rounded-lg p-4 border border-dashed border-muted-foreground/20">
                 <Avatar className="h-24 w-24 border-2 border-background shadow-md">
@@ -178,7 +176,6 @@ export function CustomerFormDialog({
               <Building className="w-4 h-4" />
               Contact & Work
             </div>
-            <Separator />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="cf-phone" className="text-xs font-bold">Phone Number</Label>
@@ -205,7 +202,6 @@ export function CustomerFormDialog({
               <MapPin className="w-4 h-4" />
               Location & Details
             </div>
-            <Separator />
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="flex flex-col gap-2 sm:col-span-2">
                 <Label htmlFor="cf-address" className="text-xs font-bold">Street Address</Label>
@@ -232,7 +228,7 @@ export function CustomerFormDialog({
             </div>
           </div>
 
-          <DialogFooter className="pt-4">
+          <DialogFooter className="pt-2">
             <AppButton type="button" variant="ghost" onClick={() => onOpenChange(false)}>
               Cancel
             </AppButton>
