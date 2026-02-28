@@ -25,7 +25,13 @@ export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): Colum
               <AvatarImage src={customer.avatar} alt={customer.name} />
               <AvatarFallback>{customer.name.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
-            <span className="font-medium">{customer.name}</span>
+            <span
+              className="font-medium hover:underline hover:text-primary cursor-pointer transition-colors"
+              onClick={() => onEdit(customer)}
+              title={`Editar ${customer.name}`}
+            >
+              {customer.name}
+            </span>
           </div>
         )
       },
