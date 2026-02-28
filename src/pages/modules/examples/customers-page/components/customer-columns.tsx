@@ -2,6 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { CustomerStatusBadge } from "./customer-status-badge"
 import { CustomerRowActions } from "./customer-row-actions"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
+import { cn } from "@/shared/lib/utils"
 import type { Customer } from "../data"
 import {
   SortableHeader,
@@ -20,6 +21,15 @@ export function getCustomerColumns({ onEdit, onDelete, isMobile }: ColumnCallbac
       header: ({ column }) => <SortableHeader column={column}>Name</SortableHeader>,
       cell: ({ row }) => {
         const customer = row.original
+        const isClickable = !isMobile
+        const linkProps = isClickable
+          ? {
+            onClick: () => onEdit(customer),
+            title: `Editar ${customer.name}`,
+            className: "hover:underline hover:text-primary cursor-pointer relative z-20",
+          }
+          : {}
+
         return (
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
@@ -27,9 +37,8 @@ export function getCustomerColumns({ onEdit, onDelete, isMobile }: ColumnCallbac
               <AvatarFallback>{customer.name.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <span
-              className="relative z-20 font-medium hover:underline hover:text-primary cursor-pointer transition-colors"
-              onClick={() => onEdit(customer)}
-              title={`Editar ${customer.name}`}
+              className={cn("font-medium transition-colors", linkProps.className)}
+              {...linkProps}
             >
               {customer.name}
             </span>

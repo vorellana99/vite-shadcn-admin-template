@@ -3,6 +3,7 @@ import { SortableHeader } from "@/shared/components/data-table"
 import { ProductStatusBadge } from "./product-status-badge"
 import { AppBadge } from "@/shared/components/badges/app-badge"
 import { ProductRowActions } from "./product-row-actions"
+import { cn } from "@/shared/lib/utils"
 import type { Product } from "../data"
 
 interface ColumnCallbacks {
@@ -20,7 +21,26 @@ export function getProductColumns({ onEdit, onDelete, isMobile }: ColumnCallback
     {
       accessorKey: "name",
       header: ({ column }) => <SortableHeader column={column}>Name</SortableHeader>,
-      cell: ({ row }) => <span className="font-medium">{row.getValue("name")}</span>,
+      cell: ({ row }) => {
+        const product = row.original
+        const isClickable = !isMobile
+        const linkProps = isClickable
+          ? {
+            onClick: () => onEdit(product),
+            title: `Editar ${product.name}`,
+            className: "hover:underline hover:text-primary cursor-pointer relative z-20",
+          }
+          : {}
+
+        return (
+          <span
+            className={cn("font-medium transition-colors", linkProps.className)}
+            {...linkProps}
+          >
+            {product.name}
+          </span>
+        )
+      },
       enableHiding: false,
     },
     {
