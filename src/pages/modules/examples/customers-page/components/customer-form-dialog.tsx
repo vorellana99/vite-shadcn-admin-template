@@ -86,23 +86,19 @@ export function CustomerFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto [&>button]:text-primary-foreground [&>button]:hover:text-primary-foreground/80 [&>button>svg]:!size-5 [&>button]:top-5 [&>button]:right-5">
         {/* Customized Header with Primary Background */}
-        <DialogHeader className="-mt-6 -mx-6 px-6 py-6 pb-6 bg-primary text-primary-foreground rounded-t-lg relative">
-          <div className="flex items-center gap-4">
-            <div className="bg-primary-foreground/20 p-3 rounded-xl shadow-sm">
-              <User className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <div>
-              <DialogTitle className="text-xl font-bold text-primary-foreground">
-                {customer ? "Edit Customer" : "New Customer"}
-              </DialogTitle>
-              <DialogDescription className="mt-1 text-primary-foreground/80">
-                {customer ? "Update the customer's information." : "Register a new client in the system."}
-              </DialogDescription>
-            </div>
+        <DialogHeader className="-mt-6 -mx-6 px-6 py-4 bg-primary text-primary-foreground rounded-t-lg relative">
+          <div className="flex items-center gap-3">
+            <User className="w-5 h-5 text-primary-foreground" />
+            <DialogTitle className="text-lg font-bold text-primary-foreground">
+              {customer ? "Edit Customer" : "New Customer"}
+            </DialogTitle>
           </div>
+          <DialogDescription className="sr-only">
+            {customer ? "Update the customer's information." : "Register a new client in the system."}
+          </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-10 md:space-y-8 mt-4">
+        <form onSubmit={handleSubmit} className="space-y-8 md:space-y-8 mt-2">
           {/* SECTION: GENERAL INFO */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
