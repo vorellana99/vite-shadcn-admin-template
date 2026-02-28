@@ -121,19 +121,19 @@ export function CustomerFormDialog({
               </div>
 
               <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 col-span-1 sm:col-span-1">
                   <Label htmlFor="cf-name" className="text-xs font-bold">Full Name</Label>
                   <Input id="cf-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. John Doe" />
                   {errors.name && <p className="text-destructive text-[10px] font-medium">{errors.name}</p>}
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 col-span-1 sm:col-span-1">
                   <Label htmlFor="cf-email" className="text-xs font-bold">Email Address</Label>
                   <Input id="cf-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@company.com" />
                   {errors.email && <p className="text-destructive text-[10px] font-medium">{errors.email}</p>}
                 </div>
 
-                <div className="flex flex-col gap-2 col-span-2 sm:col-span-1">
+                <div className="flex flex-col gap-2 col-span-1 sm:col-span-1">
                   <Label htmlFor="cf-status" className="text-xs font-bold">Account Status</Label>
                   <Select value={status} onValueChange={(v) => setStatus(v as Customer["status"])}>
                     <SelectTrigger id="cf-status" className={cn(
@@ -154,7 +154,7 @@ export function CustomerFormDialog({
                   </Select>
                 </div>
 
-                <div className="flex flex-col gap-2 col-span-2 sm:col-span-1">
+                <div className="flex flex-col gap-2 col-span-1 sm:col-span-1">
                   <Label htmlFor="cf-avatar" className="text-xs font-bold">Photo URL</Label>
                   <Input id="cf-avatar" value={avatar} onChange={(e) => setAvatar(e.target.value)} placeholder="https://api.dicebear.com/..." />
                 </div>
@@ -169,12 +169,12 @@ export function CustomerFormDialog({
               Contact & Work
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 col-span-1 sm:col-span-1">
                 <Label htmlFor="cf-phone" className="text-xs font-bold">Phone Number</Label>
                 <Input id="cf-phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+1 555-0100" />
                 {errors.phone && <p className="text-destructive text-[10px] font-medium">{errors.phone}</p>}
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 col-span-1 sm:col-span-1">
                 <Label htmlFor="cf-company" className="text-xs font-bold">Company Name</Label>
                 <Input id="cf-company" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="e.g. Acme Corp" />
                 {errors.company && <p className="text-destructive text-[10px] font-medium">{errors.company}</p>}
@@ -189,19 +189,19 @@ export function CustomerFormDialog({
               Location & Details
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="flex flex-col gap-2 sm:col-span-2">
+              <div className="flex flex-col gap-2 col-span-1 sm:col-span-2">
                 <Label htmlFor="cf-address" className="text-xs font-bold">Street Address</Label>
                 <Input id="cf-address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Street Name, Apt 4" />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 col-span-1 sm:col-span-1">
                 <Label htmlFor="cf-city" className="text-xs font-bold">City</Label>
                 <Input id="cf-city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 col-span-1 sm:col-span-1">
                 <Label htmlFor="cf-zip" className="text-xs font-bold">ZIP Code</Label>
                 <Input id="cf-zip" value={zip} onChange={(e) => setZip(e.target.value)} placeholder="00000" />
               </div>
-              <div className="flex flex-col gap-2 sm:col-span-2">
+              <div className="flex flex-col gap-2 col-span-1 sm:col-span-2">
                 <Label htmlFor="cf-dob" className="text-xs font-bold">Date of Birth</Label>
                 <DatePicker
                   value={dob}
