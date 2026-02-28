@@ -1,9 +1,10 @@
-import { useEffect, useState, useRef } from "react"
-import { Building, Calendar, User, Camera, Globe, MapPin } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Building, User, Camera, Globe, MapPin } from "lucide-react"
 
 import type { Customer, FormErrors } from "../data"
 import { formSchema } from "../data"
 import { AppButton } from "@/shared/components/buttons/app-button"
+import { DatePicker } from "@/shared/components/date-picker"
 import {
   Dialog,
   DialogContent,
@@ -48,7 +49,6 @@ export function CustomerFormDialog({
   const [city, setCity] = useState("")
   const [zip, setZip] = useState("")
   const [errors, setErrors] = useState<FormErrors>({})
-  const dobInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (open) {
@@ -203,20 +203,12 @@ export function CustomerFormDialog({
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2">
                 <Label htmlFor="cf-dob" className="text-xs font-bold">Date of Birth</Label>
-                <div className="relative isolate group">
-                  <Calendar
-                    className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground z-10 cursor-pointer hover:text-primary transition-colors"
-                    onClick={() => dobInputRef.current?.showPicker()}
-                  />
-                  <Input
-                    ref={dobInputRef}
-                    id="cf-dob"
-                    type="date"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                    className="pl-9 [&::-webkit-calendar-picker-indicator]:hidden"
-                  />
-                </div>
+                <DatePicker
+                  value={dob}
+                  onChange={setDob}
+                  placeholder="Select birth date"
+                  className="w-full text-foreground hover:bg-transparent h-10 border-input bg-transparent disabled:cursor-not-allowed disabled:opacity-50 !font-normal"
+                />
               </div>
             </div>
           </div>
