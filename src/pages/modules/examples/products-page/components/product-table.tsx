@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-table"
 import { IconPlus, IconX } from "@tabler/icons-react"
 
+import { useIsMobile } from "@/shared/hooks/use-mobile"
 import type { Product } from "../data"
 import { categories } from "../data"
 import { getProductColumns } from "./product-columns"
@@ -38,9 +39,10 @@ interface ProductTableProps {
 }
 
 export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTableProps) {
+  const isMobile = useIsMobile()
   const columns = useMemo(
-    () => getProductColumns({ onEdit, onDelete }),
-    [onEdit, onDelete],
+    () => getProductColumns({ onEdit, onDelete, isMobile }),
+    [onEdit, onDelete, isMobile],
   )
 
   const [sorting, setSorting] = useState<SortingState>([])

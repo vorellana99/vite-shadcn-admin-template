@@ -8,13 +8,14 @@ import type { Product } from "../data"
 interface ColumnCallbacks {
   onEdit: (product: Product) => void
   onDelete: (product: Product) => void
+  isMobile?: boolean
 }
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value)
 }
 
-export function getProductColumns({ onEdit, onDelete }: ColumnCallbacks): ColumnDef<Product>[] {
+export function getProductColumns({ onEdit, onDelete, isMobile }: ColumnCallbacks): ColumnDef<Product>[] {
   return [
     {
       accessorKey: "name",
@@ -78,6 +79,7 @@ export function getProductColumns({ onEdit, onDelete }: ColumnCallbacks): Column
           product={row.original}
           onEdit={onEdit}
           onDelete={onDelete}
+          isMobile={isMobile}
         />
       ),
     },

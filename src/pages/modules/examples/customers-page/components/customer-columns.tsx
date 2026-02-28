@@ -10,9 +10,10 @@ import {
 interface ColumnCallbacks {
   onEdit: (customer: Customer) => void
   onDelete: (customer: Customer) => void
+  isMobile?: boolean
 }
 
-export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): ColumnDef<Customer>[] {
+export function getCustomerColumns({ onEdit, onDelete, isMobile }: ColumnCallbacks): ColumnDef<Customer>[] {
   return [
     {
       accessorKey: "name",
@@ -26,7 +27,7 @@ export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): Colum
               <AvatarFallback>{customer.name.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <span
-              className="font-medium hover:underline hover:text-primary cursor-pointer transition-colors"
+              className="relative z-20 font-medium hover:underline hover:text-primary cursor-pointer transition-colors"
               onClick={() => onEdit(customer)}
               title={`Editar ${customer.name}`}
             >
@@ -65,6 +66,7 @@ export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): Colum
           customer={row.original}
           onEdit={onEdit}
           onDelete={onDelete}
+          isMobile={isMobile}
         />
       ),
     },

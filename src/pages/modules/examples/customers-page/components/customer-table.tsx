@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-table"
 import { IconPlus, IconX } from "@tabler/icons-react"
 
+import { useIsMobile } from "@/shared/hooks/use-mobile"
 import type { Customer } from "../data"
 import { getCustomerColumns } from "./customer-columns"
 import { DataTablePagination } from "@/shared/components/data-table/data-table-pagination"
@@ -35,9 +36,10 @@ interface CustomerTableProps {
 }
 
 export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTableProps) {
+  const isMobile = useIsMobile()
   const columns = useMemo(
-    () => getCustomerColumns({ onEdit, onDelete }),
-    [onEdit, onDelete],
+    () => getCustomerColumns({ onEdit, onDelete, isMobile }),
+    [onEdit, onDelete, isMobile],
   )
 
   const [sorting, setSorting] = useState<SortingState>([])

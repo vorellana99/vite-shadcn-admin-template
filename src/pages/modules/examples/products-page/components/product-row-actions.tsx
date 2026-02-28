@@ -12,15 +12,17 @@ interface ProductRowActionsProps {
     product: Product
     onEdit: (product: Product) => void
     onDelete: (product: Product) => void
+    isMobile?: boolean
 }
 
 export function ProductRowActions({
     product,
     onEdit,
     onDelete,
+    isMobile,
 }: ProductRowActionsProps) {
     return (
-        <DataTableRowActions triggerIcon={<IconMenu2 className="size-4" />}>
+        <DataTableRowActions isRowOverlay={isMobile} triggerIcon={<IconMenu2 className="size-4" />}>
             <DropdownMenuLabel className="px-2 py-1.5 text-xs text-muted-foreground font-medium uppercase tracking-widest">
                 Acciones del Producto
             </DropdownMenuLabel>

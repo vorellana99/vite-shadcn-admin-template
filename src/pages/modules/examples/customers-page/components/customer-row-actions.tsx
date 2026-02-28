@@ -12,15 +12,17 @@ interface CustomerRowActionsProps {
     customer: Customer
     onEdit: (customer: Customer) => void
     onDelete: (customer: Customer) => void
+    isMobile?: boolean
 }
 
 export function CustomerRowActions({
     customer,
     onEdit,
     onDelete,
+    isMobile,
 }: CustomerRowActionsProps) {
     return (
-        <DataTableRowActions triggerIcon={<IconMenu2 className="size-4" />}>
+        <DataTableRowActions isRowOverlay={isMobile} triggerIcon={<IconMenu2 className="size-4" />}>
             <DropdownMenuLabel className="px-2 py-1.5 text-xs text-muted-foreground font-medium uppercase tracking-widest">
                 Acciones del Cliente
             </DropdownMenuLabel>
