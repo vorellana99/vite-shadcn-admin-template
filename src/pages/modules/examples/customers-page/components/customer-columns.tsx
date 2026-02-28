@@ -1,9 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { CustomerStatusBadge } from "./customer-status-badge"
+import { CustomerRowActions } from "./customer-row-actions"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
 import type { Customer } from "../data"
 import {
-  DataTableRowActions,
   SortableHeader,
 } from "@/shared/components/data-table"
 
@@ -61,8 +61,8 @@ export function getCustomerColumns({ onEdit, onDelete }: ColumnCallbacks): Colum
     {
       id: "actions",
       cell: ({ row }) => (
-        <DataTableRowActions
-          row={row.original}
+        <CustomerRowActions
+          customer={row.original}
           onEdit={onEdit}
           onDelete={onDelete}
         />
