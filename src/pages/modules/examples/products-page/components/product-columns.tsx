@@ -1,10 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table"
-import {
-  SortableHeader,
-} from "@/shared/components/data-table"
+import { SortableHeader } from "@/shared/components/data-table"
 import { ProductStatusBadge } from "./product-status-badge"
-import { ProductRowActions } from "./product-row-actions"
 import { AppBadge } from "@/shared/components/badges/app-badge"
+import { ProductRowActions } from "./product-row-actions"
 import type { Product } from "../data"
 
 interface ColumnCallbacks {
