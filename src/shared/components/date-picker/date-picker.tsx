@@ -55,6 +55,7 @@ export function DatePicker({
                     variant={"outline"}
                     className={cn(
                         "w-full justify-start text-left font-normal flex items-center h-9 px-3 py-1",
+                        "border-slate-300 dark:border-slate-600 transition-colors",
                         !value && "text-muted-foreground",
                         className
                     )}
