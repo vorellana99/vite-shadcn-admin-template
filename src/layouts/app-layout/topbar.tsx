@@ -1,3 +1,4 @@
+import { Menu } from "lucide-react"
 import { Separator } from "@/shared/ui/separator"
 import { SidebarTrigger } from "@/shared/ui/sidebar"
 import { TopbarUserMenu } from "@/layouts/app-layout/components/topbar-user-menu"
@@ -12,7 +13,9 @@ export function Topbar({ page }: TopbarProps) {
   return (
     <header className="flex h-14 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       <div className="flex flex-1 items-center gap-2 px-4 lg:px-6">
-        <SidebarTrigger className="-ml-1" />
+        <SidebarTrigger className="-ml-1">
+          <Menu className="size-5!" />
+        </SidebarTrigger>
         <Separator
           orientation="vertical"
           className="mr-2 data-[orientation=vertical]:h-4 bg-muted-foreground/40"
