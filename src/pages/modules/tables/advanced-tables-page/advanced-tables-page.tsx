@@ -66,6 +66,23 @@ function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value)
 }
 
+function SortIcon({
+  column,
+  sortKey,
+  sortDir,
+}: {
+  column: SortKey
+  sortKey: SortKey
+  sortDir: SortDir
+}) {
+  if (sortKey !== column) return <ArrowUpDown className="ml-1 inline size-3.5 opacity-40" />
+  return sortDir === "asc" ? (
+    <ArrowUp className="ml-1 inline size-3.5" />
+  ) : (
+    <ArrowDown className="ml-1 inline size-3.5" />
+  )
+}
+
 export default function AdvancedTablesPage() {
   const [search, setSearch] = useState("")
   const [statusFilter, setStatusFilter] = useState<string>("all")
@@ -98,19 +115,15 @@ export default function AdvancedTablesPage() {
     result = [...result].sort((a, b) => {
       const aVal = a[sortKey]
       const bVal = b[sortKey]
-      const cmp = typeof aVal === "string" ? aVal.localeCompare(bVal as string) : (aVal as number) - (bVal as number)
+      const cmp =
+        typeof aVal === "string"
+          ? aVal.localeCompare(bVal as string)
+          : (aVal as number) - (bVal as number)
       return sortDir === "asc" ? cmp : -cmp
     })
 
     return result
   }, [search, statusFilter, sortKey, sortDir])
-
-  function SortIcon({ column }: { column: SortKey }) {
-    if (sortKey !== column) return <ArrowUpDown className="ml-1 inline size-3.5 opacity-40" />
-    return sortDir === "asc"
-      ? <ArrowUp className="ml-1 inline size-3.5" />
-      : <ArrowDown className="ml-1 inline size-3.5" />
-  }
 
   return (
     <div className="px-4 lg:px-6">
@@ -150,29 +163,54 @@ export default function AdvancedTablesPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>
-                  <Button variant="ghost" size="sm" className="-ml-3 h-8" onClick={() => handleSort("name")}>
-                    Project <SortIcon column="name" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="-ml-3 h-8"
+                    onClick={() => handleSort("name")}
+                  >
+                    Project <SortIcon column="name" sortKey={sortKey} sortDir={sortDir} />
                   </Button>
                 </TableHead>
                 <TableHead>
-                  <Button variant="ghost" size="sm" className="-ml-3 h-8" onClick={() => handleSort("lead")}>
-                    Lead <SortIcon column="lead" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="-ml-3 h-8"
+                    onClick={() => handleSort("lead")}
+                  >
+                    Lead <SortIcon column="lead" sortKey={sortKey} sortDir={sortDir} />
                   </Button>
                 </TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>
-                  <Button variant="ghost" size="sm" className="-ml-3 h-8" onClick={() => handleSort("progress")}>
-                    Progress <SortIcon column="progress" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="-ml-3 h-8"
+                    onClick={() => handleSort("progress")}
+                  >
+                    Progress <SortIcon column="progress" sortKey={sortKey} sortDir={sortDir} />
                   </Button>
                 </TableHead>
                 <TableHead className="text-right">
-                  <Button variant="ghost" size="sm" className="-mr-3 ml-auto h-8" onClick={() => handleSort("budget")}>
-                    Budget <SortIcon column="budget" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="-mr-3 ml-auto h-8"
+                    onClick={() => handleSort("budget")}
+                  >
+                    Budget <SortIcon column="budget" sortKey={sortKey} sortDir={sortDir} />
                   </Button>
                 </TableHead>
                 <TableHead>
-                  <Button variant="ghost" size="sm" className="-ml-3 h-8" onClick={() => handleSort("startDate")}>
-                    Start Date <SortIcon column="startDate" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="-ml-3 h-8"
+                    onClick={() => handleSort("startDate")}
+                  >
+                    Start Date <SortIcon column="startDate" sortKey={sortKey} sortDir={sortDir} />
                   </Button>
                 </TableHead>
               </TableRow>
