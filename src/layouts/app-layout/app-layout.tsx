@@ -1,8 +1,10 @@
+import { Suspense } from "react"
 import { Outlet, useLocation } from "react-router-dom"
 
 import { AppSidebar } from "@/layouts/app-layout/sidebar"
 import { Topbar } from "@/layouts/app-layout/topbar"
 import { SidebarInset, SidebarProvider } from "@/shared/ui/sidebar"
+import { PageSkeleton } from "@/shared/components/page-skeleton"
 
 const routeMeta: Record<string, { page: string; module?: string }> = {
   "/": { page: "Dashboard" },
@@ -24,9 +26,9 @@ export function AppLayout() {
         <Topbar page={meta.page} module={meta.module} />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
-            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            <Suspense fallback={<PageSkeleton />}>
               <Outlet />
-            </div>
+            </Suspense>
           </div>
         </div>
       </SidebarInset>

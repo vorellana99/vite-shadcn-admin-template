@@ -1,12 +1,14 @@
+import { lazy } from "react"
 import { Route } from "react-router-dom"
 
 import { AppLayout } from "@/layouts/app-layout/app-layout"
-import DashboardPage from "@/pages/modules/dashboard/dashboard-page/dashboard-page"
-import BasicTablesPage from "@/pages/modules/tables/basic-tables-page/basic-tables-page"
-import AdvancedTablesPage from "@/pages/modules/tables/advanced-tables-page/advanced-tables-page"
-import DatatablePage from "@/pages/modules/tables/datatable-page/datatable-page"
-import CustomersPage from "@/pages/modules/examples/customers-page/customers-page"
-import ProductsPage from "@/pages/modules/examples/products-page/products-page"
+
+const DashboardPage = lazy(() => import("@/pages/modules/dashboard/dashboard-page/dashboard-page"))
+const BasicTablesPage = lazy(() => import("@/pages/modules/tables/basic-tables-page/basic-tables-page"))
+const AdvancedTablesPage = lazy(() => import("@/pages/modules/tables/advanced-tables-page/advanced-tables-page"))
+const DatatablePage = lazy(() => import("@/pages/modules/tables/datatable-page/datatable-page"))
+const CustomersPage = lazy(() => import("@/pages/modules/examples/customers-page/customers-page"))
+const ProductsPage = lazy(() => import("@/pages/modules/examples/products-page/products-page"))
 
 /** Rutas de la app. Se usa como hijo directo de <Routes> en router/index.tsx */
 export const appRoutes = (
