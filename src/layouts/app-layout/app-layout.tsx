@@ -23,8 +23,8 @@ export function AppLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <Topbar page={meta.page} module={meta.module} />
-        <div className="flex flex-1 flex-col">
+        <Topbar page={meta.page} />
+        <div className="flex flex-1 flex-col p-2 pt-6">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <Suspense fallback={<PageSkeleton />}>
               <Outlet />
