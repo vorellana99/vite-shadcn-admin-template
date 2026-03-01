@@ -117,7 +117,7 @@ export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTa
         </div>
       </div>
 
-      <div className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
+      <div className="relative mt-2 flex flex-col gap-4 overflow-auto px-4 lg:px-6">
         <DataTableView table={table} columnsLength={columns.length} />
         <DataTablePagination table={table} />
       </div>
