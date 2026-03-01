@@ -8,6 +8,8 @@ import {
 } from "@/shared/ui/breadcrumb"
 import { Separator } from "@/shared/ui/separator"
 import { SidebarTrigger } from "@/shared/ui/sidebar"
+import { TopbarUserMenu } from "@/layouts/app-layout/components/topbar-user-menu"
+import { menuData } from "@/layouts/app-layout/menu"
 
 interface TopbarProps {
   module?: string
@@ -17,7 +19,7 @@ interface TopbarProps {
 export function Topbar({ module, page }: TopbarProps) {
   return (
     <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-      <div className="flex items-center gap-2 px-4 lg:px-6">
+      <div className="flex flex-1 items-center gap-2 px-4 lg:px-6">
         <SidebarTrigger className="-ml-1" />
         <Separator
           orientation="vertical"
@@ -38,6 +40,10 @@ export function Topbar({ module, page }: TopbarProps) {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        <div className="ml-auto flex items-center gap-2">
+          <TopbarUserMenu user={menuData.user} />
+        </div>
       </div>
     </header>
   )

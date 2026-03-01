@@ -10,8 +10,9 @@ import {
 
 export const menuData = {
   user: {
-    name: "shadcn",
+    name: "Victor",
     email: "m@example.com",
+    role: "Administrator",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
