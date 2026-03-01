@@ -93,7 +93,7 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
                 table.getColumn("category")?.setFilterValue(v === "_all" ? undefined : v)
               }
             >
-              <SelectTrigger size="sm" className="w-full sm:w-40">
+              <SelectTrigger className="w-full sm:w-40">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
@@ -109,7 +109,7 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
                 table.getColumn("status")?.setFilterValue(v === "_all" ? undefined : v)
               }
             >
-              <SelectTrigger size="sm" className="w-full sm:w-40">
+              <SelectTrigger className="w-full sm:w-40">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -122,7 +122,7 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
               </SelectContent>
             </Select>
             {hasActiveFilters && (
-              <Button variant="ghost" size="sm" onClick={resetFilters}>
+              <Button variant="ghost" onClick={resetFilters}>
                 <IconX className="size-4" />
                 Reset
               </Button>
@@ -130,7 +130,7 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
           </div>
           <div className="flex items-center gap-2">
             <DataTableColumnToggle table={table} />
-            <AppButton size="sm" onClick={onAdd}>
+            <AppButton onClick={onAdd}>
               <IconPlus />
               <span className="hidden lg:inline">Add Product</span>
             </AppButton>
