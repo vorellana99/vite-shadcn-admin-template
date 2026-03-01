@@ -9,6 +9,7 @@ import {
 import { Separator } from "@/shared/ui/separator"
 import { SidebarTrigger } from "@/shared/ui/sidebar"
 import { TopbarUserMenu } from "@/layouts/app-layout/components/topbar-user-menu"
+import { TopbarNotifications } from "@/layouts/app-layout/components/topbar-notifications"
 import { menuData } from "@/layouts/app-layout/menu"
 
 interface TopbarProps {
@@ -41,7 +42,8 @@ export function Topbar({ module, page }: TopbarProps) {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-3">
+          <TopbarNotifications />
           <TopbarUserMenu user={menuData.user} />
         </div>
       </div>
