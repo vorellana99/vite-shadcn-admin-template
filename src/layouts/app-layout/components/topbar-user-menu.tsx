@@ -44,7 +44,7 @@ export function TopbarUserMenu({ user }: TopbarUserMenuProps) {
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="ghost"
-                    className="flex h-9 items-center gap-2 rounded-full px-2 hover:bg-accent bg-slate-100/90 dark:bg-slate-800/50 shadow-sm border border-border/90"
+                    className="flex h-9 items-center gap-2 rounded-full px-2 bg-slate-100/90 shadow-sm border border-slate-300 transition-all duration-200 hover:bg-slate-200/90 hover:border-slate-400 hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
                 >
                     <Avatar className="h-7 w-7 rounded-full">
                         <AvatarImage src={user.avatar} alt={user.name} />
