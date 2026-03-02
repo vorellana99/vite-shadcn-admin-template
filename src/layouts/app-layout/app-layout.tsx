@@ -5,6 +5,7 @@ import { AppSidebar } from "@/layouts/app-layout/sidebar"
 import { Topbar } from "@/layouts/app-layout/topbar"
 import { SidebarInset, SidebarProvider } from "@/shared/ui/sidebar"
 import { PageSkeleton } from "@/shared/components/page-skeleton"
+import { PageContent } from "@/layouts/app-layout/components/page-content"
 
 const routeMeta: Record<string, { page: string; module?: string }> = {
   "/": { page: "Dashboard" },
@@ -24,13 +25,11 @@ export function AppLayout() {
       <AppSidebar />
       <SidebarInset>
         <Topbar page={meta.page} />
-        <div className="flex flex-1 flex-col p-2 pt-6">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <Suspense fallback={<PageSkeleton />}>
-              <Outlet />
-            </Suspense>
-          </div>
-        </div>
+        <PageContent>
+          <Suspense fallback={<PageSkeleton />}>
+            <Outlet />
+          </Suspense>
+        </PageContent>
       </SidebarInset>
     </SidebarProvider>
   )
