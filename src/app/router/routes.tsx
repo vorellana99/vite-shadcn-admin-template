@@ -9,6 +9,7 @@ const AdvancedTablesPage = lazy(() => import("@/pages/modules/tables/advanced-ta
 const DatatablePage = lazy(() => import("@/pages/modules/tables/datatable-page/datatable-page"))
 const CustomersPage = lazy(() => import("@/pages/modules/examples/customers-page/customers-page"))
 const ProductsPage = lazy(() => import("@/pages/modules/examples/products-page/products-page"))
+const ReportsPage = lazy(() => import("@/pages/modules/reports-page/reports-page"))
 
 /** Rutas de la app. Se usa como hijo directo de <Routes> en router/index.tsx */
 export const appRoutes = (
@@ -19,5 +20,6 @@ export const appRoutes = (
     <Route path="/tables/datatable" element={<DatatablePage />} />
     <Route path="/examples/customers" element={<CustomersPage />} />
     <Route path="/examples/products" element={<ProductsPage />} />
+    <Route path="/reports" element={<ReportsPage />} />
   </Route>
 )
