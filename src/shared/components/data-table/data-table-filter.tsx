@@ -1,4 +1,3 @@
-import * as React from "react"
 import {
     Select,
     SelectContent,
@@ -37,10 +36,10 @@ export function DataTableFilter({
 }: DataTableFilterProps) {
     return (
         <Select value={value} onValueChange={onValueChange}>
-            <SelectTrigger className={cn("w-full sm:w-40 bg-background border-black/15", className)}>
+            <SelectTrigger className={cn("w-full sm:w-64 bg-background border-black/15", className)}>
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent position="popper" sideOffset={4}>
                 {allOptionLabel && (
                     <SelectItem value="_all">{allOptionLabel}</SelectItem>
                 )}
