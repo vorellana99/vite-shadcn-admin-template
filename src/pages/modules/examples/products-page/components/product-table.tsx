@@ -18,18 +18,12 @@ import { getProductColumns } from "./product-columns"
 import {
   DataTableColumnToggle,
   DataTablePagination,
+  DataTableSearch,
+  DataTableFilter,
 } from "@/shared/components/data-table"
 import { DataTableView } from "@/shared/components/data-table/data-table-view"
 import { Button } from "@/shared/ui/button"
 import { AppButton } from "@/shared/components/buttons/app-button"
-import { Input } from "@/shared/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/ui/select"
 
 interface ProductTableProps {
   products: Product[]
@@ -81,46 +75,35 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
       <div className="flex flex-col gap-4 px-4 lg:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-1 flex-wrap items-center gap-2">
-            <Input
+            <DataTableSearch
               placeholder="Search products..."
               value={globalFilter}
               onChange={(e) => setGlobalFilter(e.target.value)}
-              className="h-9 w-full sm:w-64 bg-background border-black/15"
             />
-            <Select
+            <DataTableFilter
               value={categoryFilterValue || "_all"}
               onValueChange={(v) =>
                 table.getColumn("category")?.setFilterValue(v === "_all" ? undefined : v)
               }
-            >
-              <SelectTrigger className="w-full sm:w-40 bg-background border-black/15">
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="_all">All Categories</SelectItem>
-                {categories.map((cat) => (
-                  <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select
+              placeholder="Category"
+              allOptionLabel="All Categories"
+              options={categories.map(cat => ({ value: cat, label: cat }))}
+            />
+            <DataTableFilter
               value={statusFilterValue || "_all"}
               onValueChange={(v) =>
                 table.getColumn("status")?.setFilterValue(v === "_all" ? undefined : v)
               }
-            >
-              <SelectTrigger className="w-full sm:w-40 bg-background border-black/15">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="_all">All Statuses</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="low_stock">Low Stock</SelectItem>
-                <SelectItem value="out_of_stock">Out of Stock</SelectItem>
-                <SelectItem value="coming_soon">Coming Soon</SelectItem>
-                <SelectItem value="discontinued">Discontinued</SelectItem>
-              </SelectContent>
-            </Select>
+              placeholder="Status"
+              allOptionLabel="All Statuses"
+              options={[
+                { value: "active", label: "Active" },
+                { value: "low_stock", label: "Low Stock" },
+                { value: "out_of_stock", label: "Out of Stock" },
+                { value: "coming_soon", label: "Coming Soon" },
+                { value: "discontinued", label: "Discontinued" },
+              ]}
+            />
             {hasActiveFilters && (
               <Button variant="ghost" onClick={resetFilters}>
                 <IconX className="size-4" />

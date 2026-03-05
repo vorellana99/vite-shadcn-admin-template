@@ -14,19 +14,15 @@ import { IconPlus, IconX } from "@tabler/icons-react"
 import { useIsMobile } from "@/shared/hooks/use-mobile"
 import type { Customer } from "../data"
 import { getCustomerColumns } from "./customer-columns"
-import { DataTablePagination } from "@/shared/components/data-table/data-table-pagination"
 import { DataTableView } from "@/shared/components/data-table/data-table-view"
-import { DataTableColumnToggle } from "@/shared/components/data-table"
+import {
+  DataTableColumnToggle,
+  DataTablePagination,
+  DataTableSearch,
+  DataTableFilter,
+} from "@/shared/components/data-table"
 import { Button } from "@/shared/ui/button"
 import { AppButton } from "@/shared/components/buttons/app-button"
-import { Input } from "@/shared/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/ui/select"
 
 interface CustomerTableProps {
   customers: Customer[]
@@ -76,30 +72,26 @@ export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTa
       <div className="flex flex-col gap-4 px-4 lg:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-1 flex-wrap items-center gap-2">
-            <Input
+            <DataTableSearch
               placeholder="Search customers..."
               value={globalFilter}
               onChange={(e) => setGlobalFilter(e.target.value)}
-              className="h-9 w-full sm:w-64 bg-background border-black/15"
             />
-            <Select
+            <DataTableFilter
               value={statusFilterValue || "_all"}
               onValueChange={(v) =>
                 table.getColumn("status")?.setFilterValue(v === "_all" ? undefined : v)
               }
-            >
-              <SelectTrigger className="w-full sm:w-40 bg-background border-black/15">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="_all">All Statuses</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="vip">VIP</SelectItem>
-                <SelectItem value="suspended">Suspended</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
+              placeholder="Status"
+              allOptionLabel="All Statuses"
+              options={[
+                { value: "active", label: "Active" },
+                { value: "pending", label: "Pending" },
+                { value: "vip", label: "VIP" },
+                { value: "suspended", label: "Suspended" },
+                { value: "inactive", label: "Inactive" },
+              ]}
+            />
             {hasActiveFilters && (
               <Button variant="ghost" onClick={resetFilters}>
                 <IconX className="size-4" />
