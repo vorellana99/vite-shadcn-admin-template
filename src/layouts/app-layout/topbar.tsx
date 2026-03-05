@@ -21,7 +21,7 @@ export function Topbar({ page }: TopbarProps) {
           className="mr-2 data-[orientation=vertical]:h-4 bg-muted-foreground/40"
         />
 
-        <span className="text-lg font-semibold text-foreground">
+        <span className="text-xl font-semibold text-foreground">
           {page}
         </span>
 
