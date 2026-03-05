@@ -6,6 +6,7 @@ import {
   GalleryVerticalEnd,
   LayoutDashboard,
   SquareTerminal,
+  PieChart,
 } from "lucide-react"
 
 export const menuData = {
@@ -102,6 +103,11 @@ export const menuData = {
           url: "#",
         },
       ],
+    },
+    {
+      title: "Reportes",
+      url: "/reports",
+      icon: PieChart,
     },
   ],
 }
