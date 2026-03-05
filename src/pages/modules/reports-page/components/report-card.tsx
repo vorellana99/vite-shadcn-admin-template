@@ -22,7 +22,7 @@ export function ReportCard({ title, description, icon: Icon, onClick, className 
         <Card
             onClick={onClick}
             className={cn(
-                "group cursor-pointer overflow-hidden transition-all hover:shadow-md hover:ring-2 hover:ring-primary/20",
+                "group cursor-pointer overflow-hidden transition-all hover:shadow-md hover:ring-2 hover:ring-primary/20 p-0 gap-0 border-black/40 rounded-lg",
                 className
             )}
         >
@@ -34,7 +34,7 @@ export function ReportCard({ title, description, icon: Icon, onClick, className 
                     {title}
                 </CardTitle>
             </CardHeader>
-            <CardContent className="bg-card px-4 py-4 text-card-foreground">
+            <CardContent className="bg-card px-4 py-4 text-card-foreground transition-colors group-hover:bg-primary/10">
                 <CardDescription className="text-sm leading-relaxed">
                     {description}
                 </CardDescription>
