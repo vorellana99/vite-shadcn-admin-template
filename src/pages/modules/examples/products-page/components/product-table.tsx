@@ -85,7 +85,7 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
               placeholder="Search products..."
               value={globalFilter}
               onChange={(e) => setGlobalFilter(e.target.value)}
-              className="h-9 w-full sm:w-64"
+              className="h-9 w-full sm:w-64 bg-background border-black/15"
             />
             <Select
               value={categoryFilterValue || "_all"}
@@ -93,7 +93,7 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
                 table.getColumn("category")?.setFilterValue(v === "_all" ? undefined : v)
               }
             >
-              <SelectTrigger className="w-full sm:w-40">
+              <SelectTrigger className="w-full sm:w-40 bg-background border-black/15">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
@@ -109,7 +109,7 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
                 table.getColumn("status")?.setFilterValue(v === "_all" ? undefined : v)
               }
             >
-              <SelectTrigger className="w-full sm:w-40">
+              <SelectTrigger className="w-full sm:w-40 bg-background border-black/15">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>

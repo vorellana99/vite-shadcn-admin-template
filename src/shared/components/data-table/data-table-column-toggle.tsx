@@ -19,7 +19,7 @@ export function DataTableColumnToggle<TData>({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" className="h-9 border-black/15 bg-background">
           <IconLayoutColumns />
           <span className="hidden lg:inline">Customize Columns</span>
           <span className="lg:hidden">Columns</span>

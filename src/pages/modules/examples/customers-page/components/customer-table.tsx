@@ -80,7 +80,7 @@ export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTa
               placeholder="Search customers..."
               value={globalFilter}
               onChange={(e) => setGlobalFilter(e.target.value)}
-              className="h-9 w-full sm:w-64"
+              className="h-9 w-full sm:w-64 bg-background border-black/15"
             />
             <Select
               value={statusFilterValue || "_all"}
@@ -88,7 +88,7 @@ export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTa
                 table.getColumn("status")?.setFilterValue(v === "_all" ? undefined : v)
               }
             >
-              <SelectTrigger className="w-full sm:w-40">
+              <SelectTrigger className="w-full sm:w-40 bg-background border-black/15">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
