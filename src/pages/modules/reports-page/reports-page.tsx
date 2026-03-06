@@ -3,10 +3,12 @@ import { ReportCard } from "./components/report-card"
 import { reportsData } from "./data/reports"
 import type { ReportCategory } from "./data/reports"
 import { DataTableSearch, DataTableFilter } from "@/shared/components/data-table"
+import { DailySalesReportDialog } from "./components/daily-sales-report-dialog"
 
 export default function ReportsPage() {
     const [search, setSearch] = useState("")
     const [category, setCategory] = useState<string>("_all")
+    const [dailySalesOpen, setDailySalesOpen] = useState(false)
 
     // Group reports by category
     const categories: ReportCategory[] = ["Ventas", "Clientes", "Inventario", "Financiero"]
@@ -28,6 +30,14 @@ export default function ReportsPage() {
             reports: filteredReports.filter(report => report.category === category)
         }))
         .filter(group => group.reports.length > 0)
+
+    const handleReportClick = (id: string) => {
+        if (id === "rep-001") {
+            setDailySalesOpen(true)
+        } else {
+            console.log(`Navigating to report ${id}`)
+        }
+    }
 
     return (
         <div className="flex-1 space-y-4 p-8 pt-1">
@@ -69,7 +79,7 @@ export default function ReportsPage() {
                                     title={report.title}
                                     description={report.description}
                                     icon={report.icon}
-                                    onClick={() => console.log(`Navigating to ${report.path}`)}
+                                    onClick={() => handleReportClick(report.id)}
                                 />
                             ))}
                         </div>
@@ -83,6 +93,11 @@ export default function ReportsPage() {
                     </div>
                 )}
             </div>
+
+            <DailySalesReportDialog
+                open={dailySalesOpen}
+                onOpenChange={setDailySalesOpen}
+            />
         </div>
     )
 }
