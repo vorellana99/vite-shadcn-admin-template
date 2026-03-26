@@ -17,12 +17,13 @@ import { menuData } from "@/layouts/app-layout/menu"
  *  - Items con sub-items (ej. Tables, Examples) generan entradas por cada sub-item.
  *  - Un pathname inexistente devuelve el fallback "Not Found".
  */
-const routeMeta: Record<string, string> = Object.fromEntries(
-  menuData.navMain.flatMap(({ url, title, items }) => [
+const routeMeta: Record<string, string> = Object.fromEntries([
+  ...menuData.navMain.flatMap(({ url, title, items }) => [
     ...(url !== "#" ? [[url, title]] : []),
     ...(items?.filter(s => s.url !== "#").map(s => [s.url, s.title]) ?? []),
-  ])
-)
+  ]),
+  ...(menuData.navCore?.map(({ url, title }) => [url, title]) ?? []),
+])
 
 
 export function AppLayout() {

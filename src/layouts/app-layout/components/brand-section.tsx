@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { Info, Settings, LifeBuoy } from "lucide-react"
 
 import {
@@ -54,23 +55,29 @@ export function BrandSection({
                             Opciones de Marca
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator className="my-1.5 opacity-50" />
-                        <DropdownMenuItem className="cursor-pointer gap-3 p-2.5 rounded-lg transition-colors focus:bg-primary/10 focus:text-primary group">
-                            <div className="flex bg-primary/10 p-1.5 rounded-md text-primary transition-colors group-focus:bg-primary/20">
-                                <Info className="size-4" />
-                            </div>
-                            <span className="font-medium">Información de Marca</span>
+                        <DropdownMenuItem asChild className="cursor-pointer gap-3 p-2.5 rounded-lg transition-colors focus:bg-primary/10 focus:text-primary group">
+                            <Link to="/core/brand/settings">
+                                <div className="flex bg-primary/10 p-1.5 rounded-md text-primary transition-colors group-focus:bg-primary/20">
+                                    <Info className="size-4" />
+                                </div>
+                                <span className="font-medium">Información de Marca</span>
+                            </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer gap-3 p-2.5 rounded-lg transition-colors focus:bg-primary/10 focus:text-primary group">
-                            <div className="flex bg-blue-500/10 p-1.5 rounded-md text-blue-600 dark:text-blue-400 transition-colors group-focus:bg-blue-500/20">
-                                <Settings className="size-4" />
-                            </div>
-                            <span className="font-medium">Configuración</span>
+                        <DropdownMenuItem asChild className="cursor-pointer gap-3 p-2.5 rounded-lg transition-colors focus:bg-primary/10 focus:text-primary group">
+                            <Link to="/core/brand/settings">
+                                <div className="flex bg-blue-500/10 p-1.5 rounded-md text-blue-600 dark:text-blue-400 transition-colors group-focus:bg-blue-500/20">
+                                    <Settings className="size-4" />
+                                </div>
+                                <span className="font-medium">Configuración</span>
+                            </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer gap-3 p-2.5 rounded-lg transition-colors focus:bg-primary/10 focus:text-primary group">
-                            <div className="flex bg-emerald-500/10 p-1.5 rounded-md text-emerald-600 dark:text-emerald-400 transition-colors group-focus:bg-emerald-500/20">
-                                <LifeBuoy className="size-4" />
-                            </div>
-                            <span className="font-medium">Soporte Técnico</span>
+                        <DropdownMenuItem asChild className="cursor-pointer gap-3 p-2.5 rounded-lg transition-colors focus:bg-primary/10 focus:text-primary group">
+                            <Link to="/core/brand/support">
+                                <div className="flex bg-emerald-500/10 p-1.5 rounded-md text-emerald-600 dark:text-emerald-400 transition-colors group-focus:bg-emerald-500/20">
+                                    <LifeBuoy className="size-4" />
+                                </div>
+                                <span className="font-medium">Soporte Técnico</span>
+                            </Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

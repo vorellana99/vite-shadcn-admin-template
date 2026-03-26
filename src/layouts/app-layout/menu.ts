@@ -110,4 +110,11 @@ export const menuData = {
       icon: PieChart,
     },
   ],
+  navCore: [
+    { title: "Perfil de Usuario", url: "/core/user/profile" },
+    { title: "Configuración de Cuenta", url: "/core/user/settings" },
+    { title: "Seguridad", url: "/core/user/security" },
+    { title: "Configuración de Marca", url: "/core/brand/settings" },
+    { title: "Soporte de Marca", url: "/core/brand/support" },
+  ],
 }
