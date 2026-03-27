@@ -9,6 +9,8 @@ const AdvancedTablesPage = lazy(() => import("@/pages/modules/tables/advanced-ta
 const DatatablePage = lazy(() => import("@/pages/modules/tables/datatable-page/datatable-page"))
 const CustomersPage = lazy(() => import("@/pages/modules/examples/customers-page/customers-page"))
 const ProductsPage = lazy(() => import("@/pages/modules/examples/products-page/products-page"))
+const StudentsPage = lazy(() => import("@/pages/modules/examples/students-page/students-page"))
+const StudentFormPage = lazy(() => import("@/pages/modules/examples/students-page/student-form-page"))
 const ReportsPage = lazy(() => import("@/pages/modules/reports-page/reports-page"))
 const UserSettingsPage = lazy(() => import("@/pages/core/user/user-settings/user-settings-page"))
 const UserSecurityPage = lazy(() => import("@/pages/core/user/user-security/user-security-page"))
@@ -24,6 +26,8 @@ export const appRoutes = (
     <Route path="/tables/datatable" element={<DatatablePage />} />
     <Route path="/examples/customers" element={<CustomersPage />} />
     <Route path="/examples/products" element={<ProductsPage />} />
+    <Route path="/examples/students" element={<StudentsPage />} />
+    <Route path="/examples/students/:id" element={<StudentFormPage />} />
     <Route path="/reports" element={<ReportsPage />} />
 
     {/* Core Routes */}

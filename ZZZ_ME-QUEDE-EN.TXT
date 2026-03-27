@@ -1,0 +1,100 @@
+
+ME QUEDE EN QUE 
+
+IMPLEMENTACION DE LAS PAGINAS DE MARCA Y USUARIO
+    VER CUAL ES LA MEJOR MANERA DE ABORDAR ESTO, CREO QUE ES MEJOR TENERLAS COMO PÁGINAS Y NO COMO MODAL
+    EL FORMULARIO DE CONFIRGURACION DE MARCA, EL DISEÑO DE SUS LABELS E INPUTS SE PODRIAN
+        REPLICAR EN EL FORM DE CUSTOMERS, YA QUE SON MAS VISTOSOS EN TAMAÑO
+    CUANDO ESTAS EN MODO MOBILE Y SELECCIONAS EL SETTINGS DE UNA MARCA EL SIDE-BAR NO DESAPARECE
+
+La tabla de customers, la cabecera de name, esta muy pegada a la izquierda
+Si la marca y nombre de la empresa (arriba a la iquierda), es cambiadda. entonces igual debe haber
+    otra seccion donde indicar los datos de la empresa. tal vez en ayuda-acerca de. con el numero de contacto y pagina web
+Deberia haber en la parta inferior de menu un texto que diga hecho por neostragegic.com o algo?
+    en todo caso donde debería ir el la empprea?
+
+TOP-BAR-USER
+    [LISTO]
+    IMPLEMENTACION INICIAL
+    [LISTO]
+    RESPONSIVO, SI EL BOTON DE NOTIFICACIONES SE FUSIONA EN MODO MOBILE
+        YA SE ARREGLO,ASI COMO ESTA ESTA BIEN
+
+
+MENU
+    MEJORAR EL DISEÑO DE LA MARCA, SI UNA SEPARACION Y VER COMO MOSTRAR LA ETIQUETA DE LA MARCA
+    [FALTA]
+    LA OPCION EL MENU SELECCIONADA TIENE UN COLOR DE FONDO BLANCO, PERO ESTOY NO DEBERIA SER AHORA ES UN BLANCO UN POCO MAS OSCURO IGUAL QUE EL DEL FONDO DE LA PAGINA QUE SE LE OSCURECIO UN POCO
+    [FALTA]
+    Al pasar el cursor sobre un item del menu, este se ilumina con el color azul oscuro, cambiar esto a color mas claro
+    [FALTA]
+    Revisar el diseño del MEnu derrepente algo mas moderno y separado
+    [LISTO]
+    OPCIONES DE MENU DEBE ESTAR EN NEGRITA, ALGUNA POSIBLE DIFERENCIACION ENTRE MENU Y SUBMENU
+
+[LISTO]
+customize columns
+TENGA LA ALTURA CORRECTA, PERO PARA NO AFECTAR EL COMPONENTE NATIVO FALTABA CREAR EL WRAPPER
+
+
+[LISTO]
+El formulario de clientes esta muy bien, pero se puede mejorar en algunos aspectos
+    creo que los espacios en los subtitulos de cada seccion son muy grandes
+
+[LISTO]
+En la maestra de clientes
+    [LISTO]
+    cual es la mejor estrategia para seleccionar la fila de un cliente y editarla
+    [LISTO]
+    El boton de acciones
+        debe ser mas llamativa, con algun diseño o icono mas notorio
+        se debe agregar un nombre a la columna?
+        No debe tener la opcion ver
+        solo debe tener las opciones de Editar, eliminar, detalles, Contrato de servicio (PDF)
+    [LISTO]
+    Enlace de editar
+        En el nombre del cliente, debe ser un enlace para editar
+        Ver que no sea muy inrruptivo y que sea en aromnia, solo al colocar el mouse cambie...
+        
+
+[LISTO]
+el boton de cancel no se distingue
+[LISTO]
+en modo movil algunos campos se distosionan
+
+[LISTO]
+quitar el icono de los campos normales, menos el de calendario
+ver si usamos el color azul de FOrm en otras partes
+[LISTO]
+tiene mucho texto en la cabecera,ver si los texto son los correctos
+[LISTO]
+verificar que la X de cerrar no se sobreponga en modo mobile
+
+PENDIENTE DE PROBAR EN DISPOSITIVO MOVIL FISICO
+    El datepicker cuando se selecciona un año no se desborde la lista de años
+
+[LISTO]
+Componetizar el formulario clientes
+
+[PENDIENTE]
+reestructurar la capeta shared/ui si tendra algo sobre shadcn en especifico
+ver si el diseño se puede mejorar como lo hizo con el formulario de clientes
+    los espacios en las opciones de menu pueden ampliarse y 
+    el tamño de la letra y espacios en general
+
+
+    
+
+INVESTIGAR:
+VITEST
+FNM 
+EVALUAR APLICAR EL AZUL OFICIAL QUE OFRECE SHADCN   
+REACT DOCTOR
+SPRTE TEST
+
+
+PRUEBAS:
+CREAR EL EJEMPLO DE STUDENTS Y VER COMO REUTILIZA LOS COMPONENTES
+    E IR GENERANDO EL PROMPT PARA REPLICARLO, PEDIRLE A LA IA QUE ME GENERE EL PROMPT PARA CREAR EL MODULO DE STUDENTS
+
+EJECUTAR DIAGNOSTICOS
