@@ -65,7 +65,7 @@ export const menuData = {
       items: [
         {
           title: "Basic Forms",
-          url: "#",
+          url: "/forms/basic",
         },
         {
           title: "Advanced Forms",
