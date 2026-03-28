@@ -198,7 +198,7 @@ export default function BasicFormsPage() {
 
                         <div className="animate-fade-in-up" style={{ animationDelay: "0.19s" }}>
                         <FormSection title="Ubicación" icon={MapPin} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                            <FormField label="Dirección" htmlFor="ef-direccion" error={errors.direccion} labelSize="sm" className="md:col-span-2">
+                            <FormField label="Dirección" htmlFor="ef-direccion" error={errors.direccion} labelSize="sm" >
                                 <AppInput
                                     id="ef-direccion"
                                     value={fields.direccion}
@@ -206,7 +206,7 @@ export default function BasicFormsPage() {
                                     placeholder="ej. Av. Los Álamos 123, Lima"
                                 />
                             </FormField>
-                            <FormField label="Referencia" htmlFor="ef-referencia" labelSize="sm" className="md:col-span-2">
+                            <FormField label="Referencia" htmlFor="ef-referencia" labelSize="sm" >
                                 <AppInput
                                     id="ef-referencia"
                                     value={fields.referencia}
