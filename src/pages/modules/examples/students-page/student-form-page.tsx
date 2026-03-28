@@ -1,30 +1,32 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { ArrowLeft, User } from "lucide-react"
+import { ImageIcon, MapPin, ShieldCheck, User } from "lucide-react"
 import { toast } from "sonner"
 
 import type { Student, FormErrors } from "./data"
 import { loadStudents, saveStudents, formSchema } from "./data"
 import { AppButton } from "@/shared/components/buttons/app-button"
-import { DatePicker } from "@/shared/components/date-picker/date-picker"
 import { AppInput } from "@/shared/components/inputs/app-input"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/shared/ui/select"
+import { DatePicker } from "@/shared/components/date-picker/date-picker"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select"
 import { cn } from "@/shared/lib/utils"
 import { FormField } from "@/shared/components/forms/form-field"
-import { AvatarUpload } from "@/shared/components/forms/avatar-upload"
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/shared/ui/card"
+import { FormSection } from "@/shared/components/forms/form-section"
+import { FormPageCard } from "@/shared/components/forms/form-page-card"
+
+
+const INITIAL_STATE = {
+    name: "",
+    email: "",
+    phone: "",
+    school: "",
+    status: "active" as Student["status"],
+    avatar: "",
+    dob: "",
+    address: "",
+    city: "",
+    zip: "",
+}
 
 export default function StudentFormPage() {
     const navigate = useNavigate()
@@ -34,22 +36,13 @@ export default function StudentFormPage() {
 
     const [students, setStudents] = useState<Student[]>([])
     const [student, setStudent] = useState<Student | null>(null)
-
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [phone, setPhone] = useState("")
-    const [school, setSchool] = useState("")
-    const [status, setStatus] = useState<Student["status"]>("active")
-    const [avatar, setAvatar] = useState("")
-    const [dob, setDob] = useState("")
-    const [address, setAddress] = useState("")
-    const [city, setCity] = useState("")
-    const [zip, setZip] = useState("")
+    const [fields, setFields] = useState(INITIAL_STATE)
     const [errors, setErrors] = useState<FormErrors>({})
+    const [imagePreview, setImagePreview] = useState<string | null>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
-    const initialValues = {
-        name: "", email: "", phone: "", school: "", status: "active" as Student["status"],
-        avatar: "", dob: "", address: "", city: "", zip: "",
+    function set(key: keyof typeof INITIAL_STATE) {
+        return (value: string) => setFields((prev) => ({ ...prev, [key]: value }))
     }
 
     useEffect(() => {
@@ -59,16 +52,18 @@ export default function StudentFormPage() {
             const found = loaded.find(s => s.id === studentId)
             if (found) {
                 setStudent(found)
-                setName(found.name ?? "")
-                setEmail(found.email ?? "")
-                setPhone(found.phone ?? "")
-                setSchool(found.school ?? "")
-                setStatus(found.status ?? "active")
-                setAvatar(found.avatar ?? "")
-                setDob(found.dob ?? "")
-                setAddress(found.address ?? "")
-                setCity(found.city ?? "")
-                setZip(found.zip ?? "")
+                setFields({
+                    name: found.name ?? "",
+                    email: found.email ?? "",
+                    phone: found.phone ?? "",
+                    school: found.school ?? "",
+                    status: found.status ?? "active",
+                    avatar: found.avatar ?? "",
+                    dob: found.dob ?? "",
+                    address: found.address ?? "",
+                    city: found.city ?? "",
+                    zip: found.zip ?? "",
+                })
             } else {
                 toast.error("Student not found")
                 navigate("/examples/students")
@@ -76,36 +71,38 @@ export default function StudentFormPage() {
         }
     }, [studentId, navigate])
 
-    function handleReset() {
-        if (student) {
-            setName(student.name ?? "")
-            setEmail(student.email ?? "")
-            setPhone(student.phone ?? "")
-            setSchool(student.school ?? "")
-            setStatus(student.status ?? "active")
-            setAvatar(student.avatar ?? "")
-            setDob(student.dob ?? "")
-            setAddress(student.address ?? "")
-            setCity(student.city ?? "")
-            setZip(student.zip ?? "")
-        } else {
-            setName(initialValues.name)
-            setEmail(initialValues.email)
-            setPhone(initialValues.phone)
-            setSchool(initialValues.school)
-            setStatus(initialValues.status)
-            setAvatar(initialValues.avatar)
-            setDob(initialValues.dob)
-            setAddress(initialValues.address)
-            setCity(initialValues.city)
-            setZip(initialValues.zip)
+    function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0]
+        if (file) {
+            setImagePreview(URL.createObjectURL(file))
         }
+    }
+
+    function handleImageClear() {
+        setImagePreview(null)
+        if (fileInputRef.current) fileInputRef.current.value = ""
+    }
+
+    function handleReset() {
+        handleImageClear()
+        setFields(student ? {
+            name: student.name ?? "",
+            email: student.email ?? "",
+            phone: student.phone ?? "",
+            school: student.school ?? "",
+            status: student.status ?? "active",
+            avatar: student.avatar ?? "",
+            dob: student.dob ?? "",
+            address: student.address ?? "",
+            city: student.city ?? "",
+            zip: student.zip ?? "",
+        } : INITIAL_STATE)
         setErrors({})
     }
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        const result = formSchema.safeParse({ name, email, phone, school, status, avatar, dob, address, city, zip })
+        const result = formSchema.safeParse(fields)
         if (!result.success) {
             const fieldErrors: FormErrors = {}
             for (const issue of result.error.issues) {
@@ -141,124 +138,169 @@ export default function StudentFormPage() {
     }
 
     return (
-        <div className="flex-1 w-full h-full px-4 md:px-6 py-4 md:py-6 overflow-y-auto">
-            <div className="flex items-center gap-4 mb-6 max-w-4xl mx-auto">
-                <AppButton type="button" variant="ghost" size="icon" onClick={() => navigate("/examples/students")} className="shrink-0 group">
-                    <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                </AppButton>
-                <div className="font-medium text-sm text-muted-foreground mr-auto">
-                    Back to Students
+        <FormPageCard
+            icon={User}
+            title={isEditing ? `Edit Student: ${fields.name}` : "New Student"}
+            subtitle={isEditing ? "Update the student's information." : "Register a new student in the system."}
+            formId="student-form"
+            submitText={isEditing ? "Save Changes" : "Create Student"}
+            onReset={handleReset}
+        >
+            <form id="student-form" onSubmit={handleSubmit} className="flex flex-col gap-8">
+
+                <div className="animate-fade-in-up" style={{ animationDelay: "0.05s" }}>
+                    <FormSection title="Identity Information" icon={User} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                        <FormField label="Full Name" htmlFor="sf-name" error={errors.name} labelSize="sm">
+                            <AppInput
+                                id="sf-name"
+                                value={fields.name}
+                                onChange={(e) => set("name")(e.target.value)}
+                                placeholder="e.g. John Doe"
+                            />
+                        </FormField>
+                        <FormField label="Email Address" htmlFor="sf-email" error={errors.email} labelSize="sm">
+                            <AppInput
+                                id="sf-email"
+                                type="email"
+                                value={fields.email}
+                                onChange={(e) => set("email")(e.target.value)}
+                                placeholder="john@student.test"
+                            />
+                        </FormField>
+                        <FormField label="Date of Birth" htmlFor="sf-dob" labelSize="sm">
+                            <DatePicker
+                                value={fields.dob}
+                                onChange={set("dob")}
+                                placeholder="Select birth date"
+                                className="w-full font-normal hover:border-primary/60 focus-visible:border-primary focus-visible:ring-primary/20"
+                            />
+                        </FormField>
+                    </FormSection>
                 </div>
-            </div>
 
-            <Card className="w-full max-w-4xl mx-auto shadow-md border-0 overflow-hidden pt-0 pb-0 gap-0">
-                <CardHeader className="bg-primary/90 text-primary-foreground px-6 py-4 flex flex-row items-center gap-3">
-                    <User className="w-6 h-6 text-primary-foreground" />
-                    <div>
-                        <CardTitle className="text-xl font-bold">
-                            {isEditing ? `Edit Student: ${name}` : "New Student"}
-                        </CardTitle>
-                    </div>
-                </CardHeader>
-                <CardContent className="pt-8">
-                    <form
-                        id="student-form"
-                        onSubmit={handleSubmit}
-                        className="flex flex-col gap-10"
-                    >
-                        {/* Group: Identity */}
-                        <div className="flex flex-col gap-5">
-                            <h3 className="text-sm font-semibold text-foreground border-b pb-2">Identity Information</h3>
-                            <div className="flex flex-col md:flex-row gap-8 items-start">
-                                {/* Left side: Avatar */}
-                                <div className="flex-shrink-0 flex justify-center w-full md:w-auto md:pt-4">
-                                    <AvatarUpload src={avatar} alt={name} fallbackText={name} />
+                <div className="animate-fade-in-up" style={{ animationDelay: "0.12s" }}>
+                    <FormSection title="Contact & Location" icon={MapPin} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                        <FormField label="Phone Number" htmlFor="sf-phone" error={errors.phone} labelSize="sm">
+                            <AppInput
+                                id="sf-phone"
+                                value={fields.phone}
+                                onChange={(e) => set("phone")(e.target.value)}
+                                placeholder="+1 555-0100"
+                            />
+                        </FormField>
+                        <FormField label="School Name" htmlFor="sf-school" error={errors.school} labelSize="sm">
+                            <AppInput
+                                id="sf-school"
+                                value={fields.school}
+                                onChange={(e) => set("school")(e.target.value)}
+                                placeholder="e.g. State University"
+                            />
+                        </FormField>
+                        <FormField label="Street Address" htmlFor="sf-address" className="md:col-span-2" labelSize="sm">
+                            <AppInput
+                                id="sf-address"
+                                value={fields.address}
+                                onChange={(e) => set("address")(e.target.value)}
+                                placeholder="123 Street Name, Apt 4"
+                            />
+                        </FormField>
+                        <FormField label="City" htmlFor="sf-city" labelSize="sm">
+                            <AppInput
+                                id="sf-city"
+                                value={fields.city}
+                                onChange={(e) => set("city")(e.target.value)}
+                                placeholder="City"
+                            />
+                        </FormField>
+                        <FormField label="ZIP Code" htmlFor="sf-zip" labelSize="sm">
+                            <AppInput
+                                id="sf-zip"
+                                value={fields.zip}
+                                onChange={(e) => set("zip")(e.target.value)}
+                                placeholder="00000"
+                            />
+                        </FormField>
+                    </FormSection>
+                </div>
+
+                <div className="animate-fade-in-up" style={{ animationDelay: "0.19s" }}>
+                    <FormSection title="System Status" icon={ShieldCheck} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                        <FormField label="Account Status" htmlFor="sf-status" labelSize="sm">
+                            <Select value={fields.status} onValueChange={(v) => set("status")(v)}>
+                                <SelectTrigger id="sf-status" className={cn(
+                                    "w-full transition-colors",
+                                    fields.status === "active"    && "border-emerald-500/50 bg-emerald-500/5 text-emerald-700",
+                                    fields.status === "inactive"  && "border-slate-400/50 bg-slate-500/5 text-slate-600",
+                                    fields.status === "pending"   && "border-amber-500/50 bg-amber-500/5 text-amber-700",
+                                    fields.status === "suspended" && "border-red-500/50 bg-red-500/5 text-red-700",
+                                    fields.status === "vip"       && "border-violet-500/50 bg-violet-500/5 text-violet-700",
+                                )}>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="active"    className="text-emerald-700 focus:bg-emerald-500/8">Active</SelectItem>
+                                    <SelectItem value="inactive"  className="text-slate-600 focus:bg-slate-500/8">Inactive</SelectItem>
+                                    <SelectItem value="pending"   className="text-amber-700 focus:bg-amber-500/8">Pending</SelectItem>
+                                    <SelectItem value="suspended" className="text-red-700 focus:bg-red-500/8">Suspended</SelectItem>
+                                    <SelectItem value="vip"       className="text-violet-700 focus:bg-violet-500/8">VIP</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </FormField>
+                    </FormSection>
+                </div>
+
+                <div className="animate-fade-in-up" style={{ animationDelay: "0.26s" }}>
+                    <FormSection title="Profile Photo" icon={ImageIcon} className="grid grid-cols-1 gap-4">
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
+                        {imagePreview ? (
+                            <div className="relative group rounded-lg overflow-hidden border border-slate-300 bg-muted/20">
+                                <img
+                                    src={imagePreview}
+                                    alt="Profile photo preview"
+                                    className="w-full max-h-64 object-contain"
+                                />
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                                    <AppButton
+                                        type="button"
+                                        variant="outline"
+                                        className="bg-white/90 hover:bg-white text-sm"
+                                        onClick={() => fileInputRef.current?.click()}
+                                    >
+                                        Change
+                                    </AppButton>
+                                    <AppButton
+                                        type="button"
+                                        variant="outline"
+                                        className="bg-white/90 hover:bg-white text-sm text-destructive border-destructive/40"
+                                        onClick={handleImageClear}
+                                    >
+                                        Remove
+                                    </AppButton>
                                 </div>
-
-                                {/* Right side: Fields */}
-                                <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                                    <FormField className="md:col-span-2" labelSize="sm" label="Full Name" htmlFor="sf-name" error={errors.name}>
-                                        <AppInput id="sf-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. John Doe" />
-                                    </FormField>
-                                    <FormField labelSize="sm" label="Email Address" htmlFor="sf-email" error={errors.email}>
-                                        <AppInput id="sf-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@student.test" />
-                                    </FormField>
-                                    <FormField labelSize="sm" label="Date of Birth" htmlFor="sf-dob">
-                                        <DatePicker
-                                            value={dob}
-                                            onChange={setDob}
-                                            placeholder="Select birth date"
-                                            className="w-full font-normal"
-                                        />
-                                    </FormField>
-                                    <FormField className="md:col-span-2" labelSize="sm" label="Photo URL" htmlFor="sf-avatar">
-                                        <AppInput id="sf-avatar" value={avatar} onChange={(e) => setAvatar(e.target.value)} placeholder="https://api.dicebear.com/..." />
-                                    </FormField>
+                            </div>
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={() => fileInputRef.current?.click()}
+                                className="w-full flex flex-col items-center justify-center gap-3 py-10 rounded-lg border-2 border-dashed border-slate-300 hover:border-primary/60 hover:bg-primary/[0.02] transition-colors cursor-pointer text-muted-foreground"
+                            >
+                                <ImageIcon className="w-8 h-8 opacity-50" />
+                                <div className="text-center">
+                                    <p className="text-sm font-medium">Click to upload a photo</p>
+                                    <p className="text-xs mt-0.5 opacity-70">PNG, JPG, WEBP — max 10 MB</p>
                                 </div>
-                            </div>
-                        </div>
+                            </button>
+                        )}
+                    </FormSection>
+                </div>
 
-                        {/* Group: Contact & Address */}
-                        <div className="flex flex-col gap-5">
-                            <h3 className="text-sm font-semibold text-foreground border-b pb-2">Contact & Location</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <FormField labelSize="sm" label="Phone Number" htmlFor="sf-phone" error={errors.phone}>
-                                    <AppInput id="sf-phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+1 555-0100" />
-                                </FormField>
-                                <FormField labelSize="sm" label="School Name" htmlFor="sf-school" error={errors.school}>
-                                    <AppInput id="sf-school" value={school} onChange={(e) => setSchool(e.target.value)} placeholder="e.g. State University" />
-                                </FormField>
-                                <FormField className="md:col-span-2" labelSize="sm" label="Street Address" htmlFor="sf-address">
-                                    <AppInput id="sf-address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Street Name, Apt 4" />
-                                </FormField>
-                                <FormField labelSize="sm" label="City" htmlFor="sf-city">
-                                    <AppInput id="sf-city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
-                                </FormField>
-                                <FormField labelSize="sm" label="ZIP Code" htmlFor="sf-zip">
-                                    <AppInput id="sf-zip" value={zip} onChange={(e) => setZip(e.target.value)} placeholder="00000" />
-                                </FormField>
-                            </div>
-                        </div>
-
-                        {/* Group: System */}
-                        <div className="flex flex-col gap-5">
-                            <h3 className="text-sm font-semibold text-foreground border-b pb-2">System Status</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <FormField labelSize="sm" label="Account Status" htmlFor="sf-status">
-                                    <Select value={status} onValueChange={(v) => setStatus(v as Student["status"])}>
-                                        <SelectTrigger id="sf-status" className={cn(
-                                            "w-full transition-colors h-10",
-                                            status === "active" && "border-green-500/50 bg-green-500/5 text-green-700 dark:text-green-400 font-medium",
-                                            status === "vip" && "border-violet-500/50 bg-violet-500/5 text-violet-700 dark:text-violet-400 font-medium",
-                                            status === "suspended" && "border-red-500/50 bg-red-500/5 text-red-700 dark:text-red-400 font-medium",
-                                            status === "inactive" && "border-gray-500/50 bg-gray-500/5 text-gray-700 dark:text-gray-400 font-medium",
-                                            status === "pending" && "border-amber-500/50 bg-amber-500/5 text-amber-700 dark:text-amber-400 font-medium"
-                                        )}>
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="active">Active</SelectItem>
-                                            <SelectItem value="inactive">Inactive</SelectItem>
-                                            <SelectItem value="pending">Pending</SelectItem>
-                                            <SelectItem value="suspended">Suspended</SelectItem>
-                                            <SelectItem value="vip">VIP</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </FormField>
-                            </div>
-                        </div>
-
-                    </form>
-                </CardContent>
-                <CardFooter className="flex items-center justify-end gap-3 pt-6 pb-6 border-t mt-4 bg-muted/20">
-                    <AppButton type="button" variant="outline" onClick={handleReset} className="min-w-[100px]">
-                        Reset
-                    </AppButton>
-                    <AppButton type="submit" form="student-form" className="shadow-lg shadow-primary/20 min-w-[140px]">
-                        {isEditing ? "Save Changes" : "Create Student"}
-                    </AppButton>
-                </CardFooter>
-            </Card>
-        </div>
+            </form>
+        </FormPageCard>
     )
 }
