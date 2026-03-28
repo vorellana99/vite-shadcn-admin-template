@@ -1,5 +1,5 @@
 import { AppBadge } from "@/shared/components/badges/app-badge"
-import type { Student } from "../schema"
+import type { Student } from "../student-schema"
 
 interface StudentStatusBadgeProps {
     status: Student["status"]

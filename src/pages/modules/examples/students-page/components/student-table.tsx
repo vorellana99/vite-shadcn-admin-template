@@ -12,7 +12,7 @@ import {
 import { IconPlus, IconX } from "@tabler/icons-react"
 
 import { useIsMobile } from "@/shared/hooks/use-mobile"
-import type { Student } from "../schema"
+import type { Student } from "../student-schema"
 import { getStudentColumns } from "./student-columns"
 import { DataTableView } from "@/shared/components/data-table/data-table-view"
 import {

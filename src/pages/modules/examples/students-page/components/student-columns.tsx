@@ -3,7 +3,7 @@ import { StudentStatusBadge } from "./student-status-badge"
 import { StudentRowActions } from "./student-row-actions"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
 import { cn } from "@/shared/lib/utils"
-import type { Student } from "../schema"
+import type { Student } from "../student-schema"
 import {
     SortableHeader,
 } from "@/shared/components/data-table"
