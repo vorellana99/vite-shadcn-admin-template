@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Building, User, Globe, MapPin, ImageIcon } from "lucide-react"
 
 import type { Customer, FormErrors } from "../data"
 import { formSchema } from "../data"
 import { AppButton } from "@/shared/components/buttons/app-button"
 import { DatePicker } from "@/shared/components/date-picker/date-picker"
+import { ImageUploadZone } from "@/shared/components/forms/image-upload-zone"
 import { Dialog, DialogContent, DialogFooter } from "@/shared/ui/dialog"
 import { AppInput } from "@/shared/components/inputs/app-input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select"
@@ -32,7 +33,6 @@ export function CustomerFormDialog({
   const [company, setCompany] = useState("")
   const [status, setStatus] = useState<Customer["status"]>("active")
   const [avatar, setAvatar] = useState("")
-  const fileInputRef = useRef<HTMLInputElement>(null)
   const [dob, setDob] = useState("")
   const [address, setAddress] = useState("")
   const [city, setCity] = useState("")
@@ -47,7 +47,6 @@ export function CustomerFormDialog({
       setCompany(customer?.company ?? "")
       setStatus(customer?.status ?? "active")
       setAvatar(customer?.avatar ?? "")
-      if (fileInputRef.current) fileInputRef.current.value = ""
       setDob(customer?.dob ?? "")
       setAddress(customer?.address ?? "")
       setCity(customer?.city ?? "")
@@ -55,16 +54,6 @@ export function CustomerFormDialog({
       setErrors({})
     }
   }, [open, customer])
-
-  function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (file) setAvatar(URL.createObjectURL(file))
-  }
-
-  function handleAvatarClear() {
-    setAvatar("")
-    if (fileInputRef.current) fileInputRef.current.value = ""
-  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -199,52 +188,14 @@ export function CustomerFormDialog({
 
           <div className="animate-fade-in-up" style={{ animationDelay: "0.26s" }}>
             <FormSection title="Profile Photo" icon={ImageIcon} className="grid grid-cols-1 gap-4">
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleAvatarChange}
+              <ImageUploadZone
+                preview={avatar || null}
+                onFileSelect={(file) => setAvatar(URL.createObjectURL(file))}
+                onClear={() => setAvatar("")}
+                uploadLabel="Click to upload a photo"
+                uploadHint="PNG, JPG, GIF — max 5 MB"
+                previewAlt="Profile photo preview"
               />
-              {avatar ? (
-                <div className="relative group rounded-lg overflow-hidden border border-slate-300 bg-muted/20">
-                  <img
-                    src={avatar}
-                    alt="Profile photo preview"
-                    className="w-full max-h-64 object-contain"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                    <AppButton
-                      type="button"
-                      variant="outline"
-                      className="bg-white/90 hover:bg-white text-sm"
-                      onClick={() => fileInputRef.current?.click()}
-                    >
-                      Change
-                    </AppButton>
-                    <AppButton
-                      type="button"
-                      variant="outline"
-                      className="bg-white/90 hover:bg-white text-sm text-destructive border-destructive/40"
-                      onClick={handleAvatarClear}
-                    >
-                      Remove
-                    </AppButton>
-                  </div>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="w-full flex flex-col items-center justify-center gap-3 py-10 rounded-lg border-2 border-dashed border-slate-300 hover:border-primary/60 hover:bg-primary/[0.02] transition-colors cursor-pointer text-muted-foreground"
-                >
-                  <ImageIcon className="w-8 h-8 opacity-50" />
-                  <div className="text-center">
-                    <p className="text-sm font-medium">Click to upload a photo</p>
-                    <p className="text-xs mt-0.5 opacity-70">PNG, JPG, GIF — max 5 MB</p>
-                  </div>
-                </button>
-              )}
             </FormSection>
           </div>
 
