@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { Building, User, Globe, MapPin, UploadCloud } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { Building, User, Globe, MapPin, ImageIcon } from "lucide-react"
 
 import type { Customer, FormErrors } from "../data"
 import { formSchema } from "../data"
@@ -32,7 +32,7 @@ export function CustomerFormDialog({
   const [company, setCompany] = useState("")
   const [status, setStatus] = useState<Customer["status"]>("active")
   const [avatar, setAvatar] = useState("")
-  const [avatarFileName, setAvatarFileName] = useState("")
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [dob, setDob] = useState("")
   const [address, setAddress] = useState("")
   const [city, setCity] = useState("")
@@ -47,7 +47,7 @@ export function CustomerFormDialog({
       setCompany(customer?.company ?? "")
       setStatus(customer?.status ?? "active")
       setAvatar(customer?.avatar ?? "")
-      setAvatarFileName("")
+      if (fileInputRef.current) fileInputRef.current.value = ""
       setDob(customer?.dob ?? "")
       setAddress(customer?.address ?? "")
       setCity(customer?.city ?? "")
@@ -58,10 +58,12 @@ export function CustomerFormDialog({
 
   function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
-    if (file) {
-      setAvatar(URL.createObjectURL(file))
-      setAvatarFileName(file.name)
-    }
+    if (file) setAvatar(URL.createObjectURL(file))
+  }
+
+  function handleAvatarClear() {
+    setAvatar("")
+    if (fileInputRef.current) fileInputRef.current.value = ""
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -196,31 +198,53 @@ export function CustomerFormDialog({
           </div>
 
           <div className="animate-fade-in-up" style={{ animationDelay: "0.26s" }}>
-            <FormSection title="Profile Photo" icon={UploadCloud} className="grid grid-cols-1">
-              <FormField label="Upload from your computer" htmlFor="cf-avatar" labelSize="sm">
-                <label
-                  htmlFor="cf-avatar"
-                  className="flex items-center gap-4 cursor-pointer rounded-lg border-2 border-dashed border-slate-300 hover:border-primary/60 px-4 py-3 transition-colors bg-background group"
-                >
-                  {avatar ? (
-                    <img src={avatar} alt="preview" className="h-10 w-10 rounded-full object-cover shrink-0 ring-2 ring-primary/20" />
-                  ) : (
-                    <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center shrink-0 group-hover:bg-primary/5 transition-colors">
-                      <UploadCloud className="h-5 w-5 text-muted-foreground group-hover:text-primary/60 transition-colors" />
-                    </div>
-                  )}
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-sm font-medium text-foreground truncate">
-                      {avatarFileName || (avatar ? "Current photo" : "Upload a photo")}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      {avatarFileName ? "Click to replace" : "JPG, PNG or GIF · Max 5MB"}
-                    </span>
+            <FormSection title="Profile Photo" icon={ImageIcon} className="grid grid-cols-1 gap-4">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
+              {avatar ? (
+                <div className="relative group rounded-lg overflow-hidden border border-slate-300 bg-muted/20">
+                  <img
+                    src={avatar}
+                    alt="Profile photo preview"
+                    className="w-full max-h-64 object-contain"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                    <AppButton
+                      type="button"
+                      variant="outline"
+                      className="bg-white/90 hover:bg-white text-sm"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      Change
+                    </AppButton>
+                    <AppButton
+                      type="button"
+                      variant="outline"
+                      className="bg-white/90 hover:bg-white text-sm text-destructive border-destructive/40"
+                      onClick={handleAvatarClear}
+                    >
+                      Remove
+                    </AppButton>
                   </div>
-                  <span className="ml-auto text-xs font-medium text-primary shrink-0">Browse</span>
-                  <input id="cf-avatar" type="file" accept="image/*" className="sr-only" onChange={handleAvatarChange} />
-                </label>
-              </FormField>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full flex flex-col items-center justify-center gap-3 py-10 rounded-lg border-2 border-dashed border-slate-300 hover:border-primary/60 hover:bg-primary/[0.02] transition-colors cursor-pointer text-muted-foreground"
+                >
+                  <ImageIcon className="w-8 h-8 opacity-50" />
+                  <div className="text-center">
+                    <p className="text-sm font-medium">Click to upload a photo</p>
+                    <p className="text-xs mt-0.5 opacity-70">PNG, JPG, GIF — max 5 MB</p>
+                  </div>
+                </button>
+              )}
             </FormSection>
           </div>
 
