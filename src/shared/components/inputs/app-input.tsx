@@ -10,7 +10,7 @@ const AppInput = React.forwardRef<React.ElementRef<typeof Input>, AppInputProps>
             <Input
                 ref={ref}
                 className={cn(
-                    "border-slate-300 transition-colors",
+                    "border-slate-300 transition-colors hover:border-primary/60 focus-visible:border-primary focus-visible:ring-primary/20",
                     className
                 )}
                 {...props}
