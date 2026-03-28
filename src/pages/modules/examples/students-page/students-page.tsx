@@ -1,19 +1,13 @@
-import { useCallback, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
-import type { Student } from "./data"
-import { loadStudents, saveStudents } from "./data"
+import type { Student } from "./student-schema"
+import { useStudents } from "./use-students"
 import { StudentTable } from "./components/student-table"
 
 export default function StudentsPage() {
     const navigate = useNavigate()
-    const [students, setStudents] = useState<Student[]>(loadStudents)
-
-    const persist = useCallback((next: Student[]) => {
-        setStudents(next)
-        saveStudents(next)
-    }, [])
+    const { students, deleteStudent } = useStudents()
 
     function handleAdd() {
         navigate("/examples/students/new")
@@ -24,8 +18,7 @@ export default function StudentsPage() {
     }
 
     function handleDelete(student: Student) {
-        const next = students.filter((s) => s.id !== student.id)
-        persist(next)
+        deleteStudent(student.id)
         toast.success(`"${student.name}" has been deleted.`)
     }
 
