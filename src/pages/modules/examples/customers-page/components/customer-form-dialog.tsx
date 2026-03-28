@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Building, User, Globe, MapPin, ImageIcon } from "lucide-react"
+import { Building, User, Globe, MapPin, UploadCloud } from "lucide-react"
 
 import type { Customer, FormErrors } from "../data"
 import { formSchema } from "../data"
@@ -7,10 +7,10 @@ import { AppButton } from "@/shared/components/buttons/app-button"
 import { DatePicker } from "@/shared/components/date-picker/date-picker"
 import { Dialog, DialogContent, DialogFooter } from "@/shared/ui/dialog"
 import { AppInput } from "@/shared/components/inputs/app-input"
-import { SelectItem } from "@/shared/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select"
+import { cn } from "@/shared/lib/utils"
 import { FormSection } from "@/shared/components/forms/form-section"
 import { FormField } from "@/shared/components/forms/form-field"
-import { FormSelect } from "@/shared/components/forms/form-select"
 import { DialogFormHeader } from "@/shared/components/forms/dialog-form-header"
 
 interface CustomerFormDialogProps {
@@ -82,7 +82,7 @@ export function CustomerFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto [&>button]:text-primary-foreground [&>button]:hover:text-primary-foreground/80 [&>button>svg]:!size-5 [&>button]:top-5 [&>button]:right-5">
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl [&>button]:text-primary-foreground [&>button]:hover:text-primary-foreground/80 [&>button>svg]:!size-5 [&>button]:top-5 [&>button]:right-5">
         <DialogFormHeader
           title={customer ? "Edit Customer" : "New Customer"}
           description={customer ? "Update the customer's information." : "Register a new client in the system."}
@@ -113,18 +113,25 @@ export function CustomerFormDialog({
               </FormField>
 
               <FormField label="Account Status" htmlFor="cf-status" labelSize="sm">
-                <FormSelect
-                  id="cf-status"
-                  value={status}
-                  onValueChange={(v) => setStatus(v as Customer["status"])}
-                  placeholder="Select status"
-                >
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="suspended">Suspended</SelectItem>
-                  <SelectItem value="vip">VIP</SelectItem>
-                </FormSelect>
+                <Select value={status} onValueChange={(v) => setStatus(v as Customer["status"])}>
+                  <SelectTrigger id="cf-status" className={cn(
+                    "w-full transition-colors",
+                    status === "active"    && "border-emerald-500/50 bg-emerald-500/5 text-emerald-700",
+                    status === "inactive"  && "border-slate-400/50 bg-slate-500/5 text-slate-600",
+                    status === "pending"   && "border-amber-500/50 bg-amber-500/5 text-amber-700",
+                    status === "suspended" && "border-red-500/50 bg-red-500/5 text-red-700",
+                    status === "vip"       && "border-violet-500/50 bg-violet-500/5 text-violet-700",
+                  )}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="active"    className="text-emerald-700 focus:bg-emerald-500/8">Active</SelectItem>
+                    <SelectItem value="inactive"  className="text-slate-600 focus:bg-slate-500/8">Inactive</SelectItem>
+                    <SelectItem value="pending"   className="text-amber-700 focus:bg-amber-500/8">Pending</SelectItem>
+                    <SelectItem value="suspended" className="text-red-700 focus:bg-red-500/8">Suspended</SelectItem>
+                    <SelectItem value="vip"       className="text-violet-700 focus:bg-violet-500/8">VIP</SelectItem>
+                  </SelectContent>
+                </Select>
               </FormField>
 
               <FormField label="Date of Birth" htmlFor="cf-dob" labelSize="sm">
@@ -189,24 +196,29 @@ export function CustomerFormDialog({
           </div>
 
           <div className="animate-fade-in-up" style={{ animationDelay: "0.26s" }}>
-            <FormSection title="Profile Photo" icon={ImageIcon} className="grid grid-cols-1">
-              <FormField label="Upload photo from your computer" htmlFor="cf-avatar" labelSize="sm">
+            <FormSection title="Profile Photo" icon={UploadCloud} className="grid grid-cols-1">
+              <FormField label="Upload from your computer" htmlFor="cf-avatar" labelSize="sm">
                 <label
                   htmlFor="cf-avatar"
-                  className="flex items-center gap-3 cursor-pointer rounded-md border border-slate-300 hover:border-primary/60 px-3 h-9 transition-colors bg-background"
+                  className="flex items-center gap-4 cursor-pointer rounded-lg border-2 border-dashed border-slate-300 hover:border-primary/60 px-4 py-3 transition-colors bg-background group"
                 >
-                  <ImageIcon className="h-4 w-4 text-muted-foreground shrink-0" />
-                  <span className="text-sm text-muted-foreground truncate flex-1">
-                    {avatarFileName || (avatar ? "Current photo (click to replace)" : "Choose a file...")}
-                  </span>
-                  <span className="text-xs text-primary font-medium shrink-0">Browse</span>
-                  <input
-                    id="cf-avatar"
-                    type="file"
-                    accept="image/*"
-                    className="sr-only"
-                    onChange={handleAvatarChange}
-                  />
+                  {avatar ? (
+                    <img src={avatar} alt="preview" className="h-10 w-10 rounded-full object-cover shrink-0 ring-2 ring-primary/20" />
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center shrink-0 group-hover:bg-primary/5 transition-colors">
+                      <UploadCloud className="h-5 w-5 text-muted-foreground group-hover:text-primary/60 transition-colors" />
+                    </div>
+                  )}
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-sm font-medium text-foreground truncate">
+                      {avatarFileName || (avatar ? "Current photo" : "Upload a photo")}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {avatarFileName ? "Click to replace" : "JPG, PNG or GIF · Max 5MB"}
+                    </span>
+                  </div>
+                  <span className="ml-auto text-xs font-medium text-primary shrink-0">Browse</span>
+                  <input id="cf-avatar" type="file" accept="image/*" className="sr-only" onChange={handleAvatarChange} />
                 </label>
               </FormField>
             </FormSection>
