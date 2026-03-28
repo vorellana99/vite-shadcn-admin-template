@@ -99,7 +99,7 @@ export default function BasicFormsPage() {
                     <form id="employee-form" onSubmit={handleSubmit} className="flex flex-col gap-8">
 
                         <div className="animate-fade-in-up" style={{ animationDelay: "0.05s" }}>
-                        <FormSection title="Información Personal" icon={UserRound} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                            <FormSection title="Información Personal" icon={UserRound} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                             <FormField label="Nombre" htmlFor="ef-nombre" error={errors.nombre} labelSize="sm">
                                 <AppInput
                                     id="ef-nombre"
@@ -134,11 +134,11 @@ export default function BasicFormsPage() {
                                     placeholder="+51 999 000 000"
                                 />
                             </FormField>
-                        </FormSection>
+                            </FormSection>
                         </div>
 
                         <div className="animate-fade-in-up" style={{ animationDelay: "0.12s" }}>
-                        <FormSection title="Datos Laborales" icon={Briefcase} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                            <FormSection title="Datos Laborales" icon={Briefcase} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                             <FormField label="Cargo" htmlFor="ef-cargo" error={errors.cargo} labelSize="sm">
                                 <AppInput
                                     id="ef-cargo"
@@ -193,11 +193,11 @@ export default function BasicFormsPage() {
                                     placeholder="ej. 3500"
                                 />
                             </FormField>
-                        </FormSection>
+                            </FormSection>
                         </div>
 
                         <div className="animate-fade-in-up" style={{ animationDelay: "0.19s" }}>
-                        <FormSection title="Ubicación" icon={MapPin} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                            <FormSection title="Ubicación" icon={MapPin} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                             <FormField label="Dirección" htmlFor="ef-direccion" error={errors.direccion} labelSize="sm" >
                                 <AppInput
                                     id="ef-direccion"
@@ -214,7 +214,7 @@ export default function BasicFormsPage() {
                                     placeholder="ej. Frente al parque, edificio azul"
                                 />
                             </FormField>
-                        </FormSection>
+                            </FormSection>
                         </div>
 
                     </form>
