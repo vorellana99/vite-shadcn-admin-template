@@ -17,6 +17,7 @@ const UserSecurityPage = lazy(() => import("@/pages/core/user/user-security/user
 const BrandSettingsPage = lazy(() => import("@/pages/core/brand/brand-settings/brand-settings-page"))
 const BrandSupportPage = lazy(() => import("@/pages/core/brand/brand-support/brand-support-page"))
 const BasicFormsPage = lazy(() => import("@/pages/modules/forms/basic-forms-page/basic-forms-page"))
+const AdvancedFormsPage = lazy(() => import("@/pages/modules/forms/advanced-forms-page/advanced-forms-page"))
 
 /** Rutas de la app. Se usa como hijo directo de <Routes> en router/index.tsx */
 export const appRoutes = (
@@ -31,6 +32,7 @@ export const appRoutes = (
     <Route path="/examples/students/:id" element={<StudentFormPage />} />
     <Route path="/reports" element={<ReportsPage />} />
     <Route path="/forms/basic" element={<BasicFormsPage />} />
+    <Route path="/forms/advanced" element={<AdvancedFormsPage />} />
 
     {/* Core Routes */}
     <Route path="/core/user/profile" element={<UserSettingsPage />} />

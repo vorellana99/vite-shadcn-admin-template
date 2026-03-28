@@ -69,7 +69,7 @@ export const menuData = {
         },
         {
           title: "Advanced Forms",
-          url: "#",
+          url: "/forms/advanced",
         },
         {
           title: "Form Validation",
