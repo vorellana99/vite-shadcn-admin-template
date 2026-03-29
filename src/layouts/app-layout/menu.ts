@@ -13,7 +13,7 @@ export const menuData = {
   user: {
     name: "Victor",
     email: "m@example.com",
-    role: "Administrator",
+    role: "Administrador",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
@@ -40,16 +40,16 @@ export const menuData = {
       icon: LayoutDashboard,
     },
     {
-      title: "Tables",
+      title: "Tablas",
       url: "#",
       icon: SquareTerminal,
       items: [
         {
-          title: "Basic Tables",
+          title: "Tablas Básicas",
           url: "/tables/basic",
         },
         {
-          title: "Advanced Tables",
+          title: "Tablas Avanzadas",
           url: "/tables/advanced",
         },
         {
@@ -59,51 +59,51 @@ export const menuData = {
       ],
     },
     {
-      title: "Forms",
+      title: "Formularios",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Basic Forms",
+          title: "Formularios Básicos",
           url: "/forms/basic",
         },
         {
-          title: "Advanced Forms",
+          title: "Formularios Avanzados",
           url: "/forms/advanced",
         },
         {
-          title: "Form Validation",
+          title: "Validación de Formularios",
           url: "#",
         },
       ],
     },
     {
-      title: "Examples",
+      title: "Ejemplos",
       url: "#",
       icon: BookOpen,
       items: [
         {
-          title: "Customers",
+          title: "Clientes",
           url: "/examples/customers",
         },
         {
-          title: "Students",
+          title: "Estudiantes",
           url: "/examples/students",
         },
         {
-          title: "Products",
+          title: "Productos",
           url: "/examples/products"
         },
         {
-          title: "Charts",
+          title: "Gráficos",
           url: "#",
         },
         {
-          title: "Timeline",
+          title: "Línea de Tiempo",
           url: "#",
         },
         {
-          title: "Toasts",
+          title: "Notificaciones",
           url: "#",
         },
       ],
