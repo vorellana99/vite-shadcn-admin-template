@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import type { ColumnDef } from "@tanstack/react-table"
 import { StudentStatusBadge } from "./student-status-badge"
 import { StudentRowActions } from "./student-row-actions"
@@ -10,12 +11,11 @@ import {
 } from "@/shared/components/data-table"
 
 interface ColumnCallbacks {
-    onEdit: (student: Student) => void
     onDelete: (student: Student) => void
     isMobile?: boolean
 }
 
-export function getStudentColumns({ onEdit, onDelete, isMobile }: ColumnCallbacks): ColumnDef<Student>[] {
+export function getStudentColumns({ onDelete, isMobile }: ColumnCallbacks): ColumnDef<Student>[] {
     return [
         {
             accessorKey: "name",
@@ -27,15 +27,6 @@ export function getStudentColumns({ onEdit, onDelete, isMobile }: ColumnCallback
             ),
             cell: ({ row }) => {
                 const student = row.original
-                const isClickable = !isMobile
-                const linkProps = isClickable
-                    ? {
-                        onClick: () => onEdit(student),
-                        title: `Editar ${student.name}`,
-                        className: "hover:underline hover:text-primary cursor-pointer relative z-20",
-                    }
-                    : {}
-
                 const initials = student.name.substring(0, 2).toUpperCase()
                 const { bg } = getInitialsColor(initials)
 
@@ -44,12 +35,16 @@ export function getStudentColumns({ onEdit, onDelete, isMobile }: ColumnCallback
                         <Avatar className="h-7 w-7">
                             <AvatarFallback className={cn(bg, "border border-foreground/20 text-foreground font-semibold text-xs")}>{initials}</AvatarFallback>
                         </Avatar>
-                        <span
-                            className={cn("font-medium transition-colors", linkProps.className)}
-                            {...linkProps}
-                        >
-                            {student.name}
-                        </span>
+                        {isMobile ? (
+                            <span className="font-medium">{student.name}</span>
+                        ) : (
+                            <Link
+                                to={`/examples/students/${student.id}`}
+                                className="font-medium hover:underline hover:text-primary transition-colors relative z-20"
+                            >
+                                {student.name}
+                            </Link>
+                        )}
                     </div>
                 )
             },
@@ -81,7 +76,6 @@ export function getStudentColumns({ onEdit, onDelete, isMobile }: ColumnCallback
             cell: ({ row }) => (
                 <StudentRowActions
                     student={row.original}
-                    onEdit={onEdit}
                     onDelete={onDelete}
                     isMobile={isMobile}
                 />

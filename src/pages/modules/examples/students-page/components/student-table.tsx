@@ -27,15 +27,14 @@ import { AppButton } from "@/shared/components/buttons/app-button"
 interface StudentTableProps {
     students: Student[]
     onAdd: () => void
-    onEdit: (student: Student) => void
     onDelete: (student: Student) => void
 }
 
-export function StudentTable({ students, onAdd, onEdit, onDelete }: StudentTableProps) {
+export function StudentTable({ students, onAdd, onDelete }: StudentTableProps) {
     const isMobile = useIsMobile()
     const columns = useMemo(
-        () => getStudentColumns({ onEdit, onDelete, isMobile }),
-        [onEdit, onDelete, isMobile],
+        () => getStudentColumns({ onDelete, isMobile }),
+        [onDelete, isMobile],
     )
 
     const [sorting, setSorting] = useState<SortingState>([])
