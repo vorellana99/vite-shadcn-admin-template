@@ -36,7 +36,7 @@ export function DataTableFilter({
 }: DataTableFilterProps) {
     return (
         <Select value={value} onValueChange={onValueChange}>
-            <SelectTrigger className={cn("w-full sm:w-64 bg-background border-black/15", className)}>
+            <SelectTrigger className={cn("w-full sm:w-64 bg-background border-black/15 transition-colors hover:border-primary/60 focus:border-primary focus:ring-primary/20", className)}>
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent position="popper" sideOffset={4}>

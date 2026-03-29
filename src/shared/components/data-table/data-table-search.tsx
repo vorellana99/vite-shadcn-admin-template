@@ -14,7 +14,7 @@ export const DataTableSearch = React.forwardRef<HTMLInputElement, DataTableSearc
         return (
             <Input
                 ref={ref}
-                className={cn("h-9 w-full sm:w-64 bg-background border-black/15", className)}
+                className={cn("h-9 w-full sm:w-64 bg-background border-black/15 transition-colors hover:border-primary/60 focus-visible:border-primary focus-visible:ring-primary/20", className)}
                 {...props}
             />
         )
