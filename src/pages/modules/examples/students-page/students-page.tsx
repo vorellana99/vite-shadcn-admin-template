@@ -13,10 +13,6 @@ export default function StudentsPage() {
         navigate("/examples/students/new")
     }
 
-    function handleEdit(student: Student) {
-        navigate(`/examples/students/${student.id}`)
-    }
-
     function handleDelete(student: Student) {
         deleteStudent(student.id)
         toast.success(`"${student.name}" has been deleted.`)
@@ -26,7 +22,6 @@ export default function StudentsPage() {
         <StudentTable
             students={students}
             onAdd={handleAdd}
-            onEdit={handleEdit}
             onDelete={handleDelete}
         />
     )
