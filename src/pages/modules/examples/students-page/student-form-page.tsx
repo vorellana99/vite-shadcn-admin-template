@@ -9,6 +9,7 @@ import { toast } from "sonner"
 import type { Student } from "./student-schema"
 import { formSchema, formDefaults } from "./student-schema"
 import { loadStudents, saveStudents, toFormValues } from "./use-students"
+import { statusConfig } from "./components/student-status-config"
 import { AppInput } from "@/shared/components/inputs/app-input"
 import { ImageUploadZone } from "@/shared/components/forms/image-upload-zone"
 import { DatePicker } from "@/shared/components/date-picker/date-picker"
@@ -179,20 +180,16 @@ export default function StudentFormPage() {
                                     <Select value={field.value} onValueChange={field.onChange}>
                                         <SelectTrigger id="sf-status" className={cn(
                                             "w-full transition-colors",
-                                            field.value === "active"    && "border-emerald-500/50 bg-emerald-500/5 text-emerald-700",
-                                            field.value === "inactive"  && "border-slate-400/50 bg-slate-500/5 text-slate-600",
-                                            field.value === "pending"   && "border-amber-500/50 bg-amber-500/5 text-amber-700",
-                                            field.value === "suspended" && "border-red-500/50 bg-red-500/5 text-red-700",
-                                            field.value === "vip"       && "border-violet-500/50 bg-violet-500/5 text-violet-700",
+                                            statusConfig[field.value as Student["status"]]?.triggerClass,
                                         )}>
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="active"    className="text-emerald-700 focus:bg-emerald-500/8">Active</SelectItem>
-                                            <SelectItem value="inactive"  className="text-slate-600 focus:bg-slate-500/8">Inactive</SelectItem>
-                                            <SelectItem value="pending"   className="text-amber-700 focus:bg-amber-500/8">Pending</SelectItem>
-                                            <SelectItem value="suspended" className="text-red-700 focus:bg-red-500/8">Suspended</SelectItem>
-                                            <SelectItem value="vip"       className="text-violet-700 focus:bg-violet-500/8">VIP</SelectItem>
+                                            {Object.entries(statusConfig).map(([value, cfg]) => (
+                                                <SelectItem key={value} value={value} className={cfg.optionClass}>
+                                                    {cfg.label}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 )}
