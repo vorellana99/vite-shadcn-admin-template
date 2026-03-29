@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Link } from "react-router-dom"
 import {
     BadgeCheck,
@@ -24,7 +23,6 @@ import {
     DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu"
 import { Button } from "@/shared/ui/button"
-import { UserProfileSheet } from "./user-profile-sheet"
 
 interface TopbarUserMenuProps {
     user: {
@@ -36,8 +34,6 @@ interface TopbarUserMenuProps {
 }
 
 export function TopbarUserMenu({ user }: TopbarUserMenuProps) {
-    const [profileOpen, setProfileOpen] = useState(false)
-
     const initials = user.name
         .split(" ")
         .map((n) => n[0])
@@ -95,14 +91,13 @@ export function TopbarUserMenu({ user }: TopbarUserMenuProps) {
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator className="my-1.5 opacity-50" />
                     <DropdownMenuGroup>
-                        <DropdownMenuItem
-                            className="cursor-pointer gap-3 p-2 rounded-lg"
-                            onClick={() => setProfileOpen(true)}
-                        >
-                            <div className="flex bg-primary/10 p-1.5 rounded-md text-primary">
-                                <BadgeCheck className="size-4" />
-                            </div>
-                            <span className="font-medium">Profile</span>
+                        <DropdownMenuItem asChild className="cursor-pointer gap-3 p-2 rounded-lg">
+                            <Link to="/core/user/profile">
+                                <div className="flex bg-primary/10 p-1.5 rounded-md text-primary">
+                                    <BadgeCheck className="size-4" />
+                                </div>
+                                <span className="font-medium">Profile</span>
+                            </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild className="cursor-pointer gap-3 p-2 rounded-lg">
                             <Link to="/core/user/settings">
@@ -141,11 +136,6 @@ export function TopbarUserMenu({ user }: TopbarUserMenuProps) {
                 </DropdownMenuContent>
             </DropdownMenu>
 
-            <UserProfileSheet
-                user={user}
-                open={profileOpen}
-                onOpenChange={setProfileOpen}
-            />
         </>
     )
 }
