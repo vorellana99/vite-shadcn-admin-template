@@ -18,7 +18,12 @@ export function getStudentColumns({ onEdit, onDelete, isMobile }: ColumnCallback
     return [
         {
             accessorKey: "name",
-            header: ({ column }) => <SortableHeader column={column}>Name</SortableHeader>,
+            header: ({ column }) => (
+                <div className="flex items-center gap-3">
+                    <span className="h-8 w-8 shrink-0" />
+                    <SortableHeader column={column}>Name</SortableHeader>
+                </div>
+            ),
             cell: ({ row }) => {
                 const student = row.original
                 const isClickable = !isMobile
