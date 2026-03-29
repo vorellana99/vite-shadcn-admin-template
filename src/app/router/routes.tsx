@@ -8,7 +8,9 @@ const BasicTablesPage = lazy(() => import("@/pages/modules/tables/basic-tables-p
 const AdvancedTablesPage = lazy(() => import("@/pages/modules/tables/advanced-tables-page/advanced-tables-page"))
 const DatatablePage = lazy(() => import("@/pages/modules/tables/datatable-page/datatable-page"))
 const CustomersPage = lazy(() => import("@/pages/modules/examples/customers-page/customers-page"))
+const CustomerFormPage = lazy(() => import("@/pages/modules/examples/customers-page/customer-form-page"))
 const ProductsPage = lazy(() => import("@/pages/modules/examples/products-page/products-page"))
+const ProductFormPage = lazy(() => import("@/pages/modules/examples/products-page/product-form-page"))
 const StudentsPage = lazy(() => import("@/pages/modules/examples/students-page/students-page"))
 const StudentFormPage = lazy(() => import("@/pages/modules/examples/students-page/student-form-page"))
 const ReportsPage = lazy(() => import("@/pages/modules/reports-page/reports-page"))
@@ -28,7 +30,9 @@ export const appRoutes = (
     <Route path="/tables/advanced" element={<AdvancedTablesPage />} />
     <Route path="/tables/datatable" element={<DatatablePage />} />
     <Route path="/examples/customers" element={<CustomersPage />} />
+    <Route path="/examples/customers/:id" element={<CustomerFormPage />} />
     <Route path="/examples/products" element={<ProductsPage />} />
+    <Route path="/examples/products/:id" element={<ProductFormPage />} />
     <Route path="/examples/students" element={<StudentsPage />} />
     <Route path="/examples/students/:id" element={<StudentFormPage />} />
     <Route path="/reports" element={<ReportsPage />} />
