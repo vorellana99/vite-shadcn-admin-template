@@ -27,15 +27,14 @@ import { AppButton } from "@/shared/components/buttons/app-button"
 interface CustomerTableProps {
   customers: Customer[]
   onAdd: () => void
-  onEdit: (customer: Customer) => void
   onDelete: (customer: Customer) => void
 }
 
-export function CustomerTable({ customers, onAdd, onEdit, onDelete }: CustomerTableProps) {
+export function CustomerTable({ customers, onAdd, onDelete }: CustomerTableProps) {
   const isMobile = useIsMobile()
   const columns = useMemo(
-    () => getCustomerColumns({ onEdit, onDelete, isMobile }),
-    [onEdit, onDelete, isMobile],
+    () => getCustomerColumns({ onDelete, isMobile }),
+    [onDelete, isMobile],
   )
 
   const [sorting, setSorting] = useState<SortingState>([])

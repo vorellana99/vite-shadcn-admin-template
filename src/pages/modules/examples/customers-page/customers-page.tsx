@@ -1,24 +1,16 @@
-import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 import type { Customer } from "./customer-schema"
 import { useCustomers } from "./use-customers"
-import { CustomerFormDialog } from "./components/customer-form-dialog"
 import { CustomerTable } from "./components/customer-table"
 
 export default function CustomersPage() {
-    const { customers, addCustomer, updateCustomer, deleteCustomer } = useCustomers()
-    const [dialogOpen, setDialogOpen] = useState(false)
-    const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null)
+    const navigate = useNavigate()
+    const { customers, deleteCustomer } = useCustomers()
 
     function handleAdd() {
-        setEditingCustomer(null)
-        setDialogOpen(true)
-    }
-
-    function handleEdit(customer: Customer) {
-        setEditingCustomer(customer)
-        setDialogOpen(true)
+        navigate("/examples/customers/new")
     }
 
     function handleDelete(customer: Customer) {
@@ -26,30 +18,11 @@ export default function CustomersPage() {
         toast.success(`"${customer.name}" has been deleted.`)
     }
 
-    function handleSave(data: Omit<Customer, "id" | "createdAt">) {
-        if (editingCustomer) {
-            updateCustomer(editingCustomer.id, data)
-            toast.success(`"${data.name}" has been updated.`)
-        } else {
-            addCustomer(data)
-            toast.success(`"${data.name}" has been created.`)
-        }
-    }
-
     return (
-        <>
-            <CustomerTable
-                customers={customers}
-                onAdd={handleAdd}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-            />
-            <CustomerFormDialog
-                open={dialogOpen}
-                onOpenChange={setDialogOpen}
-                customer={editingCustomer}
-                onSave={handleSave}
-            />
-        </>
+        <CustomerTable
+            customers={customers}
+            onAdd={handleAdd}
+            onDelete={handleDelete}
+        />
     )
 }

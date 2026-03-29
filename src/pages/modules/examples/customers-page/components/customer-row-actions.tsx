@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { IconEdit, IconTrash, IconEye, IconFileText, IconDownload, IconMenu2 } from "@tabler/icons-react"
 
 import {
@@ -10,24 +11,24 @@ import type { Customer } from "../customer-schema"
 
 interface CustomerRowActionsProps {
     customer: Customer
-    onEdit: (customer: Customer) => void
     onDelete: (customer: Customer) => void
     isMobile?: boolean
 }
 
 export function CustomerRowActions({
     customer,
-    onEdit,
     onDelete,
     isMobile,
 }: CustomerRowActionsProps) {
+    const navigate = useNavigate()
+
     return (
         <DataTableRowActions isRowOverlay={isMobile} triggerIcon={<IconMenu2 className="size-4" />}>
             <DropdownMenuLabel className="px-2 py-1.5 text-xs text-muted-foreground font-medium uppercase tracking-widest">
                 Acciones del Cliente
             </DropdownMenuLabel>
 
-            <DropdownMenuItem onClick={() => onEdit(customer)} className="cursor-pointer gap-3 p-2 rounded-lg mt-1">
+            <DropdownMenuItem onClick={() => navigate(`/examples/customers/${customer.id}`)} className="cursor-pointer gap-3 p-2 rounded-lg mt-1">
                 <div className="flex bg-primary/10 p-1.5 rounded-md text-primary">
                     <IconEdit className="size-4" />
                 </div>

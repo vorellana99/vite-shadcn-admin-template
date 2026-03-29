@@ -1,47 +1,41 @@
+import { Link } from "react-router-dom"
 import type { ColumnDef } from "@tanstack/react-table"
 import { CustomerStatusBadge } from "./customer-status-badge"
 import { CustomerRowActions } from "./customer-row-actions"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
-import { cn } from "@/shared/lib/utils"
 import type { Customer } from "../customer-schema"
 import {
   SortableHeader,
 } from "@/shared/components/data-table"
 
 interface ColumnCallbacks {
-  onEdit: (customer: Customer) => void
   onDelete: (customer: Customer) => void
   isMobile?: boolean
 }
 
-export function getCustomerColumns({ onEdit, onDelete, isMobile }: ColumnCallbacks): ColumnDef<Customer>[] {
+export function getCustomerColumns({ onDelete, isMobile }: ColumnCallbacks): ColumnDef<Customer>[] {
   return [
     {
       accessorKey: "name",
       header: ({ column }) => <SortableHeader column={column}>Name</SortableHeader>,
       cell: ({ row }) => {
         const customer = row.original
-        const isClickable = !isMobile
-        const linkProps = isClickable
-          ? {
-            onClick: () => onEdit(customer),
-            title: `Editar ${customer.name}`,
-            className: "hover:underline hover:text-primary cursor-pointer relative z-20",
-          }
-          : {}
-
         return (
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
               <AvatarImage src={customer.avatar} alt={customer.name} />
               <AvatarFallback>{customer.name.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
-            <span
-              className={cn("font-medium transition-colors", linkProps.className)}
-              {...linkProps}
-            >
-              {customer.name}
-            </span>
+            {isMobile ? (
+              <span className="font-medium">{customer.name}</span>
+            ) : (
+              <Link
+                to={`/examples/customers/${customer.id}`}
+                className="font-medium hover:underline hover:text-primary transition-colors relative z-20"
+              >
+                {customer.name}
+              </Link>
+            )}
           </div>
         )
       },
@@ -73,7 +67,6 @@ export function getCustomerColumns({ onEdit, onDelete, isMobile }: ColumnCallbac
       cell: ({ row }) => (
         <CustomerRowActions
           customer={row.original}
-          onEdit={onEdit}
           onDelete={onDelete}
           isMobile={isMobile}
         />
