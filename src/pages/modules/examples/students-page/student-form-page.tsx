@@ -30,7 +30,7 @@ export default function StudentFormPage() {
     const [student, setStudent] = useState<Student | null>(null)
     const [imagePreview, setImagePreview] = useState<string | null>(null)
 
-    const { register, control, handleSubmit, reset, watch, formState: { errors } } = useForm<FormValues>({
+    const { register, control, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: formDefaults,
     })
@@ -87,7 +87,7 @@ export default function StudentFormPage() {
     return (
         <FormPageCard
             icon={User}
-            title={isEditing ? `Edit Student: ${watch("name")}` : "New Student"}
+            title={isEditing ? "Edit Student" : "New Student"}
             subtitle={isEditing ? "Update the student's information." : "Register a new student in the system."}
             formId="student-form"
             submitText={isEditing ? "Save Changes" : "Create Student"}
