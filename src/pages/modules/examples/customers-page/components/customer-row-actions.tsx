@@ -6,7 +6,7 @@ import {
     DropdownMenuLabel,
 } from "@/shared/ui/dropdown-menu"
 import { DataTableRowActions } from "@/shared/components/data-table/data-table-row-actions"
-import type { Customer } from "../data"
+import type { Customer } from "../customer-schema"
 
 interface CustomerRowActionsProps {
     customer: Customer

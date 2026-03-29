@@ -3,7 +3,7 @@ import { CustomerStatusBadge } from "./customer-status-badge"
 import { CustomerRowActions } from "./customer-row-actions"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
 import { cn } from "@/shared/lib/utils"
-import type { Customer } from "../data"
+import type { Customer } from "../customer-schema"
 import {
   SortableHeader,
 } from "@/shared/components/data-table"

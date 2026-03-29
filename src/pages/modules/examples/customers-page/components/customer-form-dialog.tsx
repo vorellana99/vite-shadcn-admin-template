@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { Building, User, Globe, MapPin, ImageIcon } from "lucide-react"
 
-import type { Customer, FormErrors } from "../data"
-import { formSchema } from "../data"
+import type { Customer, FormErrors } from "../customer-schema"
+import { formSchema } from "../customer-schema"
 import { AppButton } from "@/shared/components/buttons/app-button"
 import { DatePicker } from "@/shared/components/date-picker/date-picker"
 import { ImageUploadZone } from "@/shared/components/forms/image-upload-zone"

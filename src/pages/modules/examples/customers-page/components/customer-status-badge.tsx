@@ -1,5 +1,5 @@
 import { AppBadge } from "@/shared/components/badges/app-badge"
-import type { Customer } from "../data"
+import type { Customer } from "../customer-schema"
 
 interface CustomerStatusBadgeProps {
     status: Customer["status"]
