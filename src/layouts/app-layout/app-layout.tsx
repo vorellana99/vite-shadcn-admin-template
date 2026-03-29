@@ -26,9 +26,17 @@ const routeMeta: Record<string, string> = Object.fromEntries([
 ])
 
 
+function resolvePageTitle(pathname: string): string {
+  if (routeMeta[pathname]) return routeMeta[pathname]
+  const prefix = Object.keys(routeMeta)
+    .filter(url => pathname.startsWith(url + "/"))
+    .sort((a, b) => b.length - a.length)[0]
+  return prefix ? routeMeta[prefix] : "Not Found"
+}
+
 export function AppLayout() {
   const { pathname } = useLocation()
-  const page = routeMeta[pathname] ?? "Not Found"
+  const page = resolvePageTitle(pathname)
 
   return (
     <SidebarProvider>
