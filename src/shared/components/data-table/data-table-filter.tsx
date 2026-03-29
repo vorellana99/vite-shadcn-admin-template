@@ -10,6 +10,7 @@ import { cn } from "@/shared/lib/utils"
 export interface DataTableFilterOption {
     value: string
     label: string
+    className?: string
 }
 
 export interface DataTableFilterProps {
@@ -44,7 +45,7 @@ export function DataTableFilter({
                     <SelectItem value="_all">{allOptionLabel}</SelectItem>
                 )}
                 {options.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value} className={option.className}>
                         {option.label}
                     </SelectItem>
                 ))}
