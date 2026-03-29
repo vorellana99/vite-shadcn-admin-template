@@ -1,8 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { StudentStatusBadge } from "./student-status-badge"
 import { StudentRowActions } from "./student-row-actions"
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
+import { Avatar, AvatarFallback } from "@/shared/ui/avatar"
 import { cn } from "@/shared/lib/utils"
+import { getInitialsColor } from "@/shared/lib/avatar-color"
 import type { Student } from "../student-schema"
 import {
     SortableHeader,
@@ -20,7 +21,7 @@ export function getStudentColumns({ onEdit, onDelete, isMobile }: ColumnCallback
             accessorKey: "name",
             header: ({ column }) => (
                 <div className="flex items-center gap-3">
-                    <span className="h-8 w-8 shrink-0" />
+                    <span className="h-7 w-7 shrink-0" />
                     <SortableHeader column={column}>Name</SortableHeader>
                 </div>
             ),
@@ -35,11 +36,13 @@ export function getStudentColumns({ onEdit, onDelete, isMobile }: ColumnCallback
                     }
                     : {}
 
+                const initials = student.name.substring(0, 2).toUpperCase()
+                const { bg } = getInitialsColor(initials)
+
                 return (
                     <div className="flex items-center gap-3">
-                        <Avatar className="h-8 w-8">
-                            <AvatarImage src={student.avatar} alt={student.name} />
-                            <AvatarFallback>{student.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+                        <Avatar className="h-7 w-7">
+                            <AvatarFallback className={cn(bg, "border border-foreground/20 text-foreground font-semibold text-xs")}>{initials}</AvatarFallback>
                         </Avatar>
                         <span
                             className={cn("font-medium transition-colors", linkProps.className)}
