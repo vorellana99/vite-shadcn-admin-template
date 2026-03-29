@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import type { ColumnDef } from "@tanstack/react-table"
-import { StudentStatusBadge } from "./student-status-badge"
+import { StudentStatusBadge } from "./student-status-config"
 import { StudentRowActions } from "./student-row-actions"
 import { Avatar, AvatarFallback } from "@/shared/ui/avatar"
 import { cn } from "@/shared/lib/utils"

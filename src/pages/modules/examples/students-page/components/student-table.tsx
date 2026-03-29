@@ -23,6 +23,8 @@ import {
 } from "@/shared/components/data-table"
 import { Button } from "@/shared/ui/button"
 import { AppButton } from "@/shared/components/buttons/app-button"
+import { cn } from "@/shared/lib/utils"
+import { statusConfig } from "./student-status-config"
 
 interface StudentTableProps {
     students: Student[]
@@ -83,13 +85,12 @@ export function StudentTable({ students, onAdd, onDelete }: StudentTableProps) {
                             }
                             placeholder="Estado"
                             allOptionLabel="Todos los estados"
-                            options={[
-                                { value: "active", label: "Activo" },
-                                { value: "pending", label: "Pendiente" },
-                                { value: "vip", label: "VIP" },
-                                { value: "suspended", label: "Suspendido" },
-                                { value: "inactive", label: "Inactivo" },
-                            ]}
+                            className={cn(statusConfig[statusFilterValue as keyof typeof statusConfig]?.triggerClass)}
+                            options={Object.entries(statusConfig).map(([value, cfg]) => ({
+                                value,
+                                label: cfg.label,
+                                className: cfg.optionClass,
+                            }))}
                         />
                         {hasActiveFilters && (
                             <Button variant="ghost" onClick={resetFilters}>
