@@ -72,7 +72,7 @@ export function StudentTable({ students, onAdd, onDelete }: StudentTableProps) {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex flex-1 flex-wrap items-center gap-2">
                         <DataTableSearch
-                            placeholder="Search students..."
+                            placeholder="Buscar estudiantes..."
                             value={globalFilter}
                             onChange={(e) => setGlobalFilter(e.target.value)}
                         />
@@ -81,20 +81,20 @@ export function StudentTable({ students, onAdd, onDelete }: StudentTableProps) {
                             onValueChange={(v) =>
                                 table.getColumn("status")?.setFilterValue(v === "_all" ? undefined : v)
                             }
-                            placeholder="Status"
-                            allOptionLabel="All Statuses"
+                            placeholder="Estado"
+                            allOptionLabel="Todos los estados"
                             options={[
-                                { value: "active", label: "Active" },
-                                { value: "pending", label: "Pending" },
+                                { value: "active", label: "Activo" },
+                                { value: "pending", label: "Pendiente" },
                                 { value: "vip", label: "VIP" },
-                                { value: "suspended", label: "Suspended" },
-                                { value: "inactive", label: "Inactive" },
+                                { value: "suspended", label: "Suspendido" },
+                                { value: "inactive", label: "Inactivo" },
                             ]}
                         />
                         {hasActiveFilters && (
                             <Button variant="ghost" onClick={resetFilters}>
                                 <IconX className="size-4" />
-                                Reset
+                                Limpiar
                             </Button>
                         )}
                     </div>
@@ -102,7 +102,7 @@ export function StudentTable({ students, onAdd, onDelete }: StudentTableProps) {
                         <DataTableColumnToggle table={table} />
                         <AppButton onClick={onAdd}>
                             <IconPlus />
-                            <span className="hidden lg:inline">Add Student</span>
+                            <span className="hidden lg:inline">Agregar Estudiante</span>
                         </AppButton>
                     </div>
                 </div>

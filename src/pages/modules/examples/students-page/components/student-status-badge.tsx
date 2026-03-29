@@ -7,19 +7,19 @@ interface StudentStatusBadgeProps {
 
 const statusConfig: Record<Student["status"], { label: string; customColor: string }> = {
     active: {
-        label: "Active",
+        label: "Activo",
         customColor: "bg-primary/20 text-primary border-primary/20",
     },
     inactive: {
-        label: "Inactive",
+        label: "Inactivo",
         customColor: "bg-muted text-muted-foreground border-border",
     },
     pending: {
-        label: "Pending",
+        label: "Pendiente",
         customColor: "bg-amber-500/15 text-amber-700 border-amber-500/20",
     },
     suspended: {
-        label: "Suspended",
+        label: "Suspendido",
         customColor: "bg-red-500/15 text-red-700 border-red-500/20",
     },
     vip: {

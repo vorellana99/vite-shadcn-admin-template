@@ -22,7 +22,7 @@ export function getStudentColumns({ onDelete, isMobile }: ColumnCallbacks): Colu
             header: ({ column }) => (
                 <div className="flex items-center gap-3">
                     <span className="h-7 w-7 shrink-0" />
-                    <SortableHeader column={column}>Name</SortableHeader>
+                    <SortableHeader column={column}>Nombre</SortableHeader>
                 </div>
             ),
             cell: ({ row }) => {
@@ -52,24 +52,24 @@ export function getStudentColumns({ onDelete, isMobile }: ColumnCallbacks): Colu
         },
         {
             accessorKey: "email",
-            header: ({ column }) => <SortableHeader column={column}>Email</SortableHeader>,
+            header: ({ column }) => <SortableHeader column={column}>Correo</SortableHeader>,
         },
         {
             accessorKey: "phone",
-            header: "Phone",
+            header: "Teléfono",
         },
         {
             accessorKey: "school",
-            header: ({ column }) => <SortableHeader column={column}>School</SortableHeader>,
+            header: ({ column }) => <SortableHeader column={column}>Institución</SortableHeader>,
         },
         {
             accessorKey: "status",
-            header: ({ column }) => <SortableHeader column={column}>Status</SortableHeader>,
+            header: ({ column }) => <SortableHeader column={column}>Estado</SortableHeader>,
             cell: ({ row }) => <StudentStatusBadge status={row.getValue("status")} />,
         },
         {
             accessorKey: "createdAt",
-            header: ({ column }) => <SortableHeader column={column}>Created</SortableHeader>,
+            header: ({ column }) => <SortableHeader column={column}>Registro</SortableHeader>,
         },
         {
             id: "actions",
