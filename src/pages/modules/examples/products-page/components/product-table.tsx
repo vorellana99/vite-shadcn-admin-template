@@ -28,15 +28,14 @@ import { AppButton } from "@/shared/components/buttons/app-button"
 interface ProductTableProps {
   products: Product[]
   onAdd: () => void
-  onEdit: (product: Product) => void
   onDelete: (product: Product) => void
 }
 
-export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTableProps) {
+export function ProductTable({ products, onAdd, onDelete }: ProductTableProps) {
   const isMobile = useIsMobile()
   const columns = useMemo(
-    () => getProductColumns({ onEdit, onDelete, isMobile }),
-    [onEdit, onDelete, isMobile],
+    () => getProductColumns({ onDelete, isMobile }),
+    [onDelete, isMobile],
   )
 
   const [sorting, setSorting] = useState<SortingState>([])

@@ -1,13 +1,12 @@
+import { Link } from "react-router-dom"
 import type { ColumnDef } from "@tanstack/react-table"
 import { SortableHeader } from "@/shared/components/data-table"
 import { ProductStatusBadge } from "./product-status-badge"
 import { AppBadge } from "@/shared/components/badges/app-badge"
 import { ProductRowActions } from "./product-row-actions"
-import { cn } from "@/shared/lib/utils"
 import type { Product } from "../product-schema"
 
 interface ColumnCallbacks {
-  onEdit: (product: Product) => void
   onDelete: (product: Product) => void
   isMobile?: boolean
 }
@@ -16,29 +15,22 @@ function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value)
 }
 
-export function getProductColumns({ onEdit, onDelete, isMobile }: ColumnCallbacks): ColumnDef<Product>[] {
+export function getProductColumns({ onDelete, isMobile }: ColumnCallbacks): ColumnDef<Product>[] {
   return [
     {
       accessorKey: "name",
       header: ({ column }) => <SortableHeader column={column}>Name</SortableHeader>,
       cell: ({ row }) => {
         const product = row.original
-        const isClickable = !isMobile
-        const linkProps = isClickable
-          ? {
-            onClick: () => onEdit(product),
-            title: `Editar ${product.name}`,
-            className: "hover:underline hover:text-primary cursor-pointer relative z-20",
-          }
-          : {}
-
-        return (
-          <span
-            className={cn("font-medium transition-colors", linkProps.className)}
-            {...linkProps}
+        return isMobile ? (
+          <span className="font-medium">{product.name}</span>
+        ) : (
+          <Link
+            to={`/examples/products/${product.id}`}
+            className="font-medium hover:underline hover:text-primary transition-colors relative z-20"
           >
             {product.name}
-          </span>
+          </Link>
         )
       },
       enableHiding: false,
@@ -97,7 +89,6 @@ export function getProductColumns({ onEdit, onDelete, isMobile }: ColumnCallback
       cell: ({ row }) => (
         <ProductRowActions
           product={row.original}
-          onEdit={onEdit}
           onDelete={onDelete}
           isMobile={isMobile}
         />
