@@ -12,8 +12,8 @@ import {
 import { IconPlus, IconX } from "@tabler/icons-react"
 
 import { useIsMobile } from "@/shared/hooks/use-mobile"
-import type { Product } from "../data"
-import { categories } from "../data"
+import type { Product } from "../product-schema"
+import { CATEGORIES } from "../product-schema"
 import { getProductColumns } from "./product-columns"
 import {
   DataTableColumnToggle,
@@ -87,7 +87,7 @@ export function ProductTable({ products, onAdd, onEdit, onDelete }: ProductTable
               }
               placeholder="Category"
               allOptionLabel="All Categories"
-              options={categories.map(cat => ({ value: cat, label: cat }))}
+              options={CATEGORIES.map(cat => ({ value: cat, label: cat }))}
             />
             <DataTableFilter
               value={statusFilterValue || "_all"}

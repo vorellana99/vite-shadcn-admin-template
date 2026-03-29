@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
-import type { Product, FormErrors } from "../data"
-import { formSchema, categories } from "../data"
+import type { Product, FormErrors } from "../product-schema"
+import { formSchema, CATEGORIES } from "../product-schema"
 import { AppButton } from "@/shared/components/buttons/app-button"
 import {
   Dialog,
@@ -46,7 +46,7 @@ export function ProductFormDialog({
     if (open) {
       setName(product?.name ?? "")
       setSku(product?.sku ?? "")
-      setCategory(product?.category ?? categories[0])
+      setCategory(product?.category ?? CATEGORIES[0])
       setPrice(product ? String(product.price) : "")
       setStock(product ? String(product.stock) : "")
       setStatus(product?.status ?? "active")
@@ -105,7 +105,7 @@ export function ProductFormDialog({
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categories.map((cat) => (
+                  {CATEGORIES.map((cat) => (
                     <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                   ))}
                 </SelectContent>

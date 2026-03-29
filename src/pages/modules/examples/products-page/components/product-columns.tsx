@@ -4,7 +4,7 @@ import { ProductStatusBadge } from "./product-status-badge"
 import { AppBadge } from "@/shared/components/badges/app-badge"
 import { ProductRowActions } from "./product-row-actions"
 import { cn } from "@/shared/lib/utils"
-import type { Product } from "../data"
+import type { Product } from "../product-schema"
 
 interface ColumnCallbacks {
   onEdit: (product: Product) => void
