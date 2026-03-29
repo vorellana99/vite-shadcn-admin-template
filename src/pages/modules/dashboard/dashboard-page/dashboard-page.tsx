@@ -9,10 +9,19 @@ const ChartAreaInteractive = lazy(() => import("@/pages/modules/dashboard/dashbo
 export default function DashboardPage() {
   return (
     <>
+      <div className="px-4 lg:px-6">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/70">Resumen Ejecutivo</h2>
+      </div>
       <SectionCards />
+      <div className="px-4 lg:px-6">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/70">Análisis de Rendimiento</h2>
+      </div>
       <Suspense fallback={<div className="px-4 lg:px-6"><Skeleton className="h-[400px] w-full rounded-xl" /></div>}>
         <ChartAreaInteractive />
       </Suspense>
+      <div className="px-4 lg:px-6">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/70">Documentación</h2>
+      </div>
       <SectionsTable data={data} />
     </>
   )
