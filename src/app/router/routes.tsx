@@ -12,9 +12,10 @@ const ProductsPage = lazy(() => import("@/pages/modules/examples/products-page/p
 const StudentsPage = lazy(() => import("@/pages/modules/examples/students-page/students-page"))
 const StudentFormPage = lazy(() => import("@/pages/modules/examples/students-page/student-form-page"))
 const ReportsPage = lazy(() => import("@/pages/modules/reports-page/reports-page"))
-const UserSettingsPage = lazy(() => import("@/pages/core/user/user-settings/user-settings-page"))
-const UserSecurityPage = lazy(() => import("@/pages/core/user/user-security/user-security-page"))
-const BrandSettingsPage = lazy(() => import("@/pages/core/brand/brand-settings/brand-settings-page"))
+const UserProfileFormPage = lazy(() => import("@/pages/core/user/user-profile/user-profile-form-page"))
+const UserSettingsFormPage = lazy(() => import("@/pages/core/user/user-settings/user-settings-form-page"))
+const UserSecurityFormPage = lazy(() => import("@/pages/core/user/user-security/user-security-form-page"))
+const BrandSettingsPage = lazy(() => import("@/pages/core/brand/brand-settings/brand-settings-form-page"))
 const BrandSupportPage = lazy(() => import("@/pages/core/brand/brand-support/brand-support-page"))
 const BasicFormsPage = lazy(() => import("@/pages/modules/forms/basic-forms-page/basic-forms-page"))
 const AdvancedFormsPage = lazy(() => import("@/pages/modules/forms/advanced-forms-page/advanced-forms-page"))
@@ -35,9 +36,9 @@ export const appRoutes = (
     <Route path="/forms/advanced" element={<AdvancedFormsPage />} />
 
     {/* Core Routes */}
-    <Route path="/core/user/profile" element={<UserSettingsPage />} />
-    <Route path="/core/user/settings" element={<UserSettingsPage />} />
-    <Route path="/core/user/security" element={<UserSecurityPage />} />
+    <Route path="/core/user/profile" element={<UserProfileFormPage />} />
+    <Route path="/core/user/settings" element={<UserSettingsFormPage />} />
+    <Route path="/core/user/security" element={<UserSecurityFormPage />} />
     <Route path="/core/brand/settings" element={<BrandSettingsPage />} />
     <Route path="/core/brand/support" element={<BrandSupportPage />} />
   </Route>
